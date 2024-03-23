@@ -1,5 +1,5 @@
 ﻿using QuickType.Aseprite;
-using Raylib_CsLo;
+using Raylib_cs;
 using System.Numerics;
 using System.Text.Json;
 using VillageIdle.Utilities;
@@ -142,10 +142,10 @@ namespace VillageIdle.Scenes.Components
 
             public Frame(Rectangle rect, float duration)
             {
-                X = (int)rect.x;
-                Y = (int)rect.y;
-                W = (int)rect.width;
-                H = (int)rect.height;
+                X = (int)rect.X;
+                Y = (int)rect.Y;
+                W = (int)rect.Width;
+                H = (int)rect.Height;
                 Duration = duration;
             }
         }

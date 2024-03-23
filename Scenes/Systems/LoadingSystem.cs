@@ -1,5 +1,5 @@
 ﻿using Arch.Core;
-using Raylib_CsLo;
+using Raylib_cs;
 using System.Diagnostics;
 using System.Numerics;
 
@@ -34,7 +34,7 @@ namespace VillageIdle.Scenes.Systems
                 var width = Raylib.MeasureText(text, size);
                 if (Phase == LoadingPhase.Text)
                 {
-                    Raylib.DrawText(text, center.X - width / 2, center.Y, size, Raylib.BLUE);
+                    Raylib.DrawText(text, (int)(center.X - width / 2), (int)center.Y, size, Color.Blue);
                     Console.WriteLine(text);
                     Phase = LoadingPhase.Load;
                 }

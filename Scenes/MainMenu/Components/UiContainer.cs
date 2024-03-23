@@ -1,4 +1,4 @@
-﻿using Raylib_CsLo;
+﻿using Raylib_cs;
 
 namespace VillageIdle.Scenes.MainMenu.Components
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Raylib_CsLo;
+using Raylib_cs;
 using VillageIdle.Scenes;
 using VillageIdle.Scenes.MainMenu;
 
@@ -41,8 +41,8 @@ namespace VillageIdle
 
             Camera = new Camera2D
             {
-                zoom = 1.0f,
-                offset = new System.Numerics.Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2),
+                Zoom = 1.0f,
+                Offset = new System.Numerics.Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2),
             };
 
             ActiveScene = new MainMenuScene();
@@ -58,7 +58,7 @@ namespace VillageIdle
             Raylib.BeginDrawing();
             Raylib.BeginMode2D(Camera);
 
-            Raylib.ClearBackground(Raylib.BLACK);
+            Raylib.ClearBackground(Color.Black);
             for (int i = 0; i < ActiveScene.Systems.Count; i++)
             {
                 ActiveScene.Systems[i].Update(ActiveScene.World);

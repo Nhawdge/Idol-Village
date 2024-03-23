@@ -1,4 +1,4 @@
-﻿using Raylib_CsLo;
+﻿using Raylib_cs;
 using System.Numerics;
 using VillageIdle.Utilities;
 
@@ -6,7 +6,7 @@ namespace VillageIdle.Scenes.Components
 {
     internal class Render
     {
-        public Texture Texture;
+        public Texture2D Texture;
         public bool IsFlipped = false;
         public OriginAlignment OriginPos = OriginAlignment.Center;
         public int Column = 0;
@@ -85,22 +85,22 @@ namespace VillageIdle.Scenes.Components
             Key = key;
             Position = Vector2.Zero;
             Scale = scale;
-            Color = Raylib.WHITE;
+            Color = Color.White;
             OriginPos = isCentered ? OriginAlignment.Center : OriginAlignment.LeftTop;
-            SpriteWidth = Texture.width;
-            SpriteHeight = Texture.height;
+            SpriteWidth = Texture.Width;
+            SpriteHeight = Texture.Height;
         }
 
-        public Render(Texture tilesprite, float scale = 1, bool isCentered = true)
+        public Render(Texture2D tilesprite, float scale = 1, bool isCentered = true)
         {
             Texture = tilesprite;
             Key = TextureKey.Empty;
             Position = Vector2.Zero;
             Scale = scale;
-            Color = Raylib.WHITE;
+            Color = Color.White;
             OriginPos = isCentered ? OriginAlignment.Center : OriginAlignment.LeftTop;
-            SpriteWidth = Texture.width;
-            SpriteHeight = Texture.height;
+            SpriteWidth = Texture.Width;
+            SpriteHeight = Texture.Height;
         }
 
         public Render()

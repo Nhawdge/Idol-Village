@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="arch" Version="1.2.7" />
-    <PackageReference Include="raylib-cslo" Version="4.2.0.9" />
+    <PackageReference Include="raylib-cs" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
