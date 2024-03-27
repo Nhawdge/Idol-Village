@@ -11,6 +11,8 @@ namespace VillageIdle.Scenes.Components
         public OriginAlignment OriginPos = OriginAlignment.Center;
         public int Column = 0;
         public int Row = 0;
+        public int SourceX = 0;
+        public int SourceY = 0;
         public int SpriteWidth = 0;
         public int SpriteHeight = 0;
         public float Scale = 1f;
@@ -22,7 +24,7 @@ namespace VillageIdle.Scenes.Components
         public float RotationAsRadians => RenderRotation * (float)(Math.PI / 180);
         public Vector2 RotationAsVector2 => Vector2.Normalize(new Vector2((float)Math.Cos(RenderRotation), (float)Math.Sin(RenderRotation)));
         public Vector2 Position;
-        public Color Color;
+        public Color Color = Color.White;
 
         public TextureKey Key;
 
@@ -60,14 +62,27 @@ namespace VillageIdle.Scenes.Components
             LeftBottom,
         }
 
+        public void SetSource(Rectangle rect)
+        {
+            this.SourceX = (int)rect.X;
+            this.SourceY = (int)rect.Y;
+            this.SpriteWidth = (int)rect.Width;
+            this.SpriteHeight = (int)rect.Height;
+        }
+
         public virtual Rectangle Source
         {
-            get => new Rectangle(
-                    Column * SpriteWidth + 2 * Column + 1,
-                    Row * SpriteHeight + 2 * Row + 1,
-                    SpriteWidth * (IsFlipped ? -1 : 1),
-                    SpriteHeight
-                    );
+            get
+            {
+                if (Column != 0 && Row != 0)
+                    return new Rectangle(
+                        Column * SpriteWidth + 2 * Column + 1,
+                        Row * SpriteHeight + 2 * Row + 1,
+                        SpriteWidth * (IsFlipped ? -1 : 1),
+                        SpriteHeight
+                        );
+                return new Rectangle(SourceX, SourceY, SpriteWidth * (IsFlipped ? -1 : 1), SpriteHeight);
+            }
         }
 
         public virtual Rectangle Destination

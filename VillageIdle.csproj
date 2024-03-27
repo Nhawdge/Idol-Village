@@ -16,6 +16,7 @@
 
   <PropertyGroup>
     <RootNamespace>VillageIdle</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

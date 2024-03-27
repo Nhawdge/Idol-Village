@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Raylib_cs;
+﻿using Raylib_cs;
 using VillageIdle.Scenes;
 using VillageIdle.Scenes.MainMenu;
 
@@ -15,6 +10,7 @@ namespace VillageIdle
 
         public Camera2D Camera;
         internal BaseScene ActiveScene;
+        internal Font Font;
 
         public void StartGame()
         {
@@ -33,6 +29,8 @@ namespace VillageIdle
             Raylib.SetTargetFPS(60);
             Raylib.InitAudioDevice();
             Raylib.SetExitKey(0);
+
+            Font = Raylib.LoadFont("Assets/Kenney/Fonts/Kenney-Mini.ttf");
 
             //if (SettingsManager.Instance.Settings[SettingsManager.SettingKeys.Fullscreen] == 1)
             //{

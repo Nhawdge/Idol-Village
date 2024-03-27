@@ -14,11 +14,21 @@ namespace VillageIdle.Scenes.MainMenu.Systems
 
         internal override void UpdateNoCamera(World world)
         {
-            var backgroundTexture = TextureManager.Instance.GetTexture(TextureKey.Empty);
-            Raylib.DrawTexturePro(backgroundTexture,
-                new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height),
-                new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()),
-                Vector2.Zero, 0f, Color.White);
+            var mousePosition = Raylib.GetMousePosition();
+            var patch = new NPatchInfo
+            {
+                Left = 10,
+                Top = 10,
+                Right = 10,
+                Bottom = 10,
+                Layout = NPatchLayout.NinePatch
+            };
+
+            var backgroundTexture = TextureManager.Instance.GetTexture(TextureKey.BrownBox);
+
+            patch.Source = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);  
+            Raylib.DrawTextureNPatch(backgroundTexture, patch, new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
+
             var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton, UiSlider>();
             var uiElementCount = world.CountEntities(in query);
 
@@ -30,8 +40,6 @@ namespace VillageIdle.Scenes.MainMenu.Systems
             if (container.HasValue)
             {
                 var uiContainer = container.Value.Get<UiContainer>();
-
-
             }
 
             world.Query(in query, (entity) =>
@@ -42,8 +50,6 @@ namespace VillageIdle.Scenes.MainMenu.Systems
 
                     var text = titleComponent.Text;
                     var rect = new Rectangle(centerPoint.X - 100, 0 + 50 * titleComponent.Order, 200, 100);
-
-                    //RayGui.GuiLabel(rect, text);
                 }
 
                 if (entity.Has<UiButton>())
@@ -57,63 +63,30 @@ namespace VillageIdle.Scenes.MainMenu.Systems
                         Height = 50
                     };
 
-                    //if (RayGui.GuiButton(rect, button.Text))
-                    //{
-                    //    button.Action();
-                    //}
+                    var boxColor = Color.White;
+                    if (Raylib.CheckCollisionPointRec(mousePosition, rect))
+                    {
+                        boxColor = Color.LightGray;
+                        if (Raylib.IsMouseButtonDown(MouseButton.Left))
+                        {
+                            boxColor = Color.DarkGray;
+                        }
+                        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
+                        {
+                            button.Action();
+                        }
+                    }
+
+                    var background = TextureManager.Instance.GetTexture(button.Background);
+                    patch.Source = new Rectangle(0, 0, background.Width, background.Height);
+                    Raylib.DrawTextureNPatch(background, patch, rect, Vector2.Zero, 0f, boxColor);
+                    var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, button.Text, 20, 0);
+                    var position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)rect.Y + rect.Height / 2 - (size.Y / 2));
+                    Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, button.Text, position, 20, 0, Color.Black);
+
                 }
-                //if (entity.Has<SpriteButton>())
-                //{
-                //    var button = entity.Get<SpriteButton>();
-
-                //    button.ButtonSprite.Play("Normal");
-                //    button.TextSprite.Play(button.Text);
-                //    if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), button.ButtonSprite.Destination))
-                //    {
-                //        button.ButtonSprite.Play("Hover");
-                //        button.TextSprite.Play($"{button.Text}Hover");
-                //        if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
-                //        {
-                //            button.Action();
-                //        }
-                //    }
-                //    button.ButtonSprite.Draw();
-                //    button.TextSprite.Draw();
-                //}
-                //if (entity.Has<UiSlider>())
-                //{
-                //    var slider = entity.Get<UiSlider>();
-                //    var val = RayGui.GuiSlider(placementContainer with
-                //    {
-                //        x = placementContainer.x + placementContainer.width / 2 - 200 / 2,
-                //        y = placementContainer.y + 60 * slider.Order,
-                //        width = 200,
-                //        height = 50
-                //    },
-                //    slider.Text,
-                //    SettingsManager.Instance.Settings[slider.SettingKey].ToString("0") + "%",
-                //    SettingsManager.Instance.Settings[slider.SettingKey],
-                //    slider.MinValue, slider.MaxValue);
-
-                //    SettingsManager.Instance.Settings[slider.SettingKey] = val;
-
-                //}
+              
             });
-
-            var mousePosition = Raylib.GetMousePosition();
-            var boxTexture = TextureManager.Instance.GetTexture(TextureKey.BlueBox);
-            var boxRect = new Rectangle(0, 0, boxTexture.Width, boxTexture.Height);
-            var patch = new NPatchInfo
-            {
-                Source = boxRect,
-                Left = 10,
-                Top = 10,
-                Right = 10,
-                Bottom = 10,
-                Layout = NPatchLayout.NinePatch
-            };
-            Raylib.DrawTextureNPatch(boxTexture, patch, new Rectangle(100, 100, mousePosition.X - 100, mousePosition.Y - 100), Vector2.Zero, 0f, Color.White);
-
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using VillageIdle.Scenes.MainMenu.Components;
 using VillageIdle.Scenes.MainMenu.Systems;
+using VillageIdle.Scenes.World1;
+using VillageIdle.Utilities;
 
 namespace VillageIdle.Scenes.MainMenu
 {
@@ -13,10 +15,12 @@ namespace VillageIdle.Scenes.MainMenu
                 Order = 2,
                 Action = () =>
                 {
-                    //VillageIdleEngine.Instance.ActiveScene = new GameScene();
+                    Console.WriteLine("Start Game");
+                    VillageIdleEngine.Instance.ActiveScene = new World1Scene();
                 },
                 Text = "Start Game",
-            }) ;
+                Background = TextureKey.BlueBox,
+            });
         }
     }
 }

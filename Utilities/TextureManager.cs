@@ -16,8 +16,10 @@ namespace VillageIdle.Utilities
         private void LoadTextures()
         {
             TextureStore.Add(TextureKey.Empty, Raylib.LoadTexture(""));
-            TextureStore.Add(TextureKey.BrownBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_brown.png"));
+            TextureStore.Add(TextureKey.BrownBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_brown.png")); 
             TextureStore.Add(TextureKey.BlueBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_blue.png"));
+            TextureStore.Add(TextureKey.BeigeBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_beige.png"));
+            TextureStore.Add(TextureKey.MedievalSpriteSheet, Raylib.LoadTexture("Assets/Kenney/RTS-Medieval/Spritesheet/medievalRTS_spritesheet@2.png"));
         }
 
         internal Texture2D GetTexture(TextureKey key)
@@ -41,5 +43,7 @@ namespace VillageIdle.Utilities
         Empty,
         BrownBox,
         BlueBox,
+        BeigeBox,
+        MedievalSpriteSheet,
     }
 }
