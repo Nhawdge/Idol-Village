@@ -2,7 +2,6 @@
 using Arch.Core.Extensions;
 using VillageIdle.Extensions;
 using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Components;
 
 namespace VillageIdle.Scenes.World1.Systems
 {

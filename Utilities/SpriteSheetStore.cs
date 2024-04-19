@@ -67,6 +67,8 @@ namespace VillageIdle.Utilities
         Tree4 = 4,
         Tree5 = 5,
         CityCenter = 12,
+        BigFarm = 55,
+        BigFarmHarvest = 56,
         Grass1 = 57,
         Grass2 = 58,
     }

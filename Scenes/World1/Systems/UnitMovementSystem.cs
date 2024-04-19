@@ -20,7 +20,7 @@ namespace VillageIdle.Scenes.World1.Systems
                     var distance = direction.Length();
                     if ( distance> 5)
                     {
-                        direction = System.Numerics.Vector2.Normalize(direction);
+                        direction = Vector2.Normalize(direction);
                         render.Position += direction * 5;
                     }
                     else

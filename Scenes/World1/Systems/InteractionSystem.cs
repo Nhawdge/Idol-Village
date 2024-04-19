@@ -2,7 +2,7 @@
 using Arch.Core.Extensions;
 using Raylib_cs;
 using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Components;
+using VillageIdle.Scenes.World1.Data;
 
 namespace VillageIdle.Scenes.World1.Systems
 {
@@ -21,7 +21,10 @@ namespace VillageIdle.Scenes.World1.Systems
                     render.Color = Color.Gray;
                     if (Raylib.IsMouseButtonPressed(MouseButton.Left))
                     {
-                        interactable.IsSelected = !interactable.IsSelected;
+                        if (Singleton.Instance.SelectedUnit == entity.Id)
+                            Singleton.Instance.SelectedUnit = -1;
+                        else
+                            Singleton.Instance.SelectedUnit = entity.Id;
                     }
                 }
                 else

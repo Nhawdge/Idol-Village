@@ -1,31 +1,36 @@
-﻿using System.ComponentModel;
-
-namespace VillageIdle.Scenes.World1.Data
+﻿namespace VillageIdle.Scenes.World1.Data
 {
     internal class VillageData
     {
-        private VillageData() { }
+        private VillageData()
+        {
+            foreach (Resource resource in Enum.GetValues(typeof(Resource)))
+            {
+                Resources.Add(resource, 0);
+            }
+        }
         internal static VillageData Instance = new();
 
         internal float TotalPrestige = 1f;
         internal float TotalPopulation = 0f;
 
-        // Raw Resources
-        internal float Food = 0f;
-        internal float Wood = 0f;
-        internal float Wool = 0f;
-        internal float MetalOre = 0f;
-        internal float Stone = 0f;
+        internal Dictionary<Resource, double> Resources = new();
+    }
 
-        // Refined Resources
-        internal float Meals = 0f;
-        internal float Lumber = 0f;
-        internal float Cloth = 0f;
-        internal float Metal = 0f;
-
-        internal float Gold = 0f;
-        internal float Leather = 0f;
-        internal float Tools = 0f;
-
+    public enum Resource
+    {
+        Food,
+        Wood,
+        Wool,
+        MetalOre,
+        Stone,
+        Meals,
+        Lumber,
+        Cloth,
+        Metal,
+        Gold,
+        Leather,
+        Tools,
+        BuildingMaterial,
     }
 }

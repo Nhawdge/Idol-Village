@@ -1,4 +1,4 @@
-﻿namespace VillageIdle.Scenes.World1.Components
+﻿namespace VillageIdle.Scenes.Components
 {
     internal class Interactable
     {

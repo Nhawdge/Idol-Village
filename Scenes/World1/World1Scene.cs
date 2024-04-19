@@ -1,9 +1,7 @@
 ﻿using Raylib_cs;
 using System.Numerics;
-using System.Runtime.InteropServices;
 using VillageIdle.Extensions;
 using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Components;
 using VillageIdle.Scenes.World1.Systems;
 using VillageIdle.Utilities;
 
@@ -17,7 +15,7 @@ namespace VillageIdle.Scenes.World1
             base.LoadingTasks.Add("Build Map", () =>
             {
                 //Raylib.SetRandomSeed((uint)DateTime.Now.Ticks);
-                var noiseMap = Raylib.GenImagePerlinNoise(1000, 1000, 100, 100, 1.0f);
+                var noiseMap = Raylib.GenImagePerlinNoise(1000, 1000, Random.Shared.Next(), Random.Shared.Next(), Random.Shared.NextSingle());
                 for (int x = 0; x < 100; x++)
                 {
                     for (int y = 0; y < 100; y++)
@@ -32,7 +30,7 @@ namespace VillageIdle.Scenes.World1
                         var red = Raylib.GetImageColor(noiseMap, x * 10, y * 10).R;
                         var blue = Raylib.GetImageColor(noiseMap, x * 10, y * 10).B;
 
-                        Console.WriteLine($"Red Value: {red} at {x},{y}");
+                        //Console.WriteLine($"Red Value: {red} at {x},{y}");
                         if (red > 120)
                         {
                             var treeVersion = red switch
@@ -42,13 +40,13 @@ namespace VillageIdle.Scenes.World1
                                 _ => SpriteKey.Tree4
                             };
                             var treeRender = new Render(TextureKey.MedievalSpriteSheet);
-                            treeRender.Position = new Vector2(x * 128 + Random.Shared.Next(0, 96), y * 128 + Random.Shared.Next(0, 96));
+                            treeRender.Position = new Vector2(x * 128, y * 128);
                             treeRender.SetSource(SpriteSheetStore.Instance.GetDecorSheetSource(treeVersion));
                             World.Create(treeRender, new StructureLayer());
                             if (blue > 120)
                             {
                                 treeRender = new Render(TextureKey.MedievalSpriteSheet);
-                                treeRender.Position = new Vector2(x * 128 + Random.Shared.Next(0, 96), y * 128 + Random.Shared.Next(0, 96));
+                                treeRender.Position = new Vector2(x * 128, y * 128);
                                 treeRender.SetSource(SpriteSheetStore.Instance.GetDecorSheetSource(treeVersion));
                                 World.Create(treeRender, new StructureLayer());
                             }
@@ -81,6 +79,7 @@ namespace VillageIdle.Scenes.World1
                 Systems.Add(new UISystem());
                 Systems.Add(new RecruitmentSystem());
                 Systems.Add(new UnitMovementSystem());
+                Systems.Add(new ProductionSystem());
             });
 
             base.LoadingTasks.Add("Ready", () =>
