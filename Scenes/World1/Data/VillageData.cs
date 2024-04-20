@@ -19,6 +19,7 @@
 
     public enum Resource
     {
+        None,
         Food,
         Wood,
         Wool,

@@ -1,11 +1,16 @@
-﻿
-namespace VillageIdle.Scenes.World1.Data
+﻿namespace VillageIdle.Scenes.World1.Data
 {
     internal class TechTree
     {
         internal static TechTree Instance = new();
 
         internal List<Technology> Technologies = new();
+
+        internal List<Technology> GetAvailableTechnologies()
+        {
+            return Technologies.Where(x => x.Researched == false && x.Prerequisites.All(y => y.Researched)).ToList();
+        }
+
         private TechTree()
         {
             LoadTechData();
@@ -19,11 +24,35 @@ namespace VillageIdle.Scenes.World1.Data
                 Description = "Unlocks the ability to grow crops.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
-                OnCompletion = () =>
-                {
-
-                }
+                Prerequisites = new() { },
+                Researched = false,
+                ProductionToAdd = new() { ProducerTypes.Gathering },
             });
+
+            Technologies.Add(new Technology
+            {
+                Name = "Hunting",
+                Description = "Unlocks the ability to hunt for food.",
+                ResearchCost = 10f,
+                ResearchTime = 10f,
+                Prerequisites = new List<Technology> { Technologies[0] },
+                Researched = false,
+                ProductionToAdd = new() { ProducerTypes.Hunting },
+            });
+
+            Technologies.Add(new Technology
+            {
+                Name = "Farming",
+                Description = "Unlocks the ability to farm crops .",
+                ResearchCost = 10f,
+                ResearchTime = 10f,
+                Prerequisites = new List<Technology> { Technologies[0], Technologies[1] },
+                Researched = false,
+                ProductionToAdd = new() { ProducerTypes.Farm },
+
+            });
+
+
         }
     }
 
@@ -36,6 +65,7 @@ namespace VillageIdle.Scenes.World1.Data
         internal float ResearchCost = 0f;
         internal float ResearchTime = 0f;
         internal float ResearchProgress = 0f;
+        internal List<ProducerTypes> ProductionToAdd;
     }
 
     // - gathering - 30% consistent, 5% chance to return toxic berries/flora

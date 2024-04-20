@@ -1,18 +1,52 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using Raylib_cs;
+using System.Net;
 using System.Numerics;
 using VillageIdle.Scenes.Components;
 using VillageIdle.Scenes.World1.Data;
+using VillageIdle.Scenes.World1.Helpers;
 using VillageIdle.Utilities;
 
 namespace VillageIdle.Scenes.World1.Systems
 {
     internal class UISystem : GameSystem
     {
+        private static readonly int SideBarWidth = 350;
+        private static readonly int SideBarPadding = 10;
+        private static readonly int SideBarInnerWidth = 330;
         internal override void Update(World world) { }
         internal override void UpdateNoCamera(World world)
         {
+            var producerQuery = new QueryDescription().WithAll<ProductionUnit>();
+
+            var producers = new Dictionary<ProducerTypes, int>();
+
+            world.Query(in producerQuery, (entity) =>
+            {
+                var productionUnit = entity.Get<ProductionUnit>();
+                if (!producers.TryAdd(productionUnit.Producer, 1))
+                {
+                    producers[productionUnit.Producer]++;
+                }
+            });
+
+            var unitQuery = new QueryDescription().WithAll<Unit>();
+
+            var availableUnits = new List<Entity>();
+            var totalUnits = 0;
+            var allUnits = new List<Entity>();
+            world.Query(in unitQuery, (entity) =>
+            {
+                var unit = entity.Get<Unit>();
+                if (unit.AssignedTo <= 0)
+                {
+                    availableUnits.Add(entity);
+                }
+                allUnits.Add(entity);
+                totalUnits++;
+            });
+
             var query = new QueryDescription().WithAny<Interactable>();
             var mousePos = Raylib.GetMousePosition();
             world.Query(in query, (entity) =>
@@ -32,93 +66,89 @@ namespace VillageIdle.Scenes.World1.Systems
                     var backgroundTexture = TextureManager.Instance.GetTexture(TextureKey.BrownBox);
 
                     patch.Source = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
-                    Raylib.DrawTextureNPatch(backgroundTexture, patch, new Rectangle(0, 0, 250, Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
+                    Raylib.DrawTextureNPatch(backgroundTexture, patch, new Rectangle(0, 0, SideBarWidth, Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
 
                     var text = "Pavekstan";
-                    var rect = new Rectangle(10, 10, 230, 40);
+                    var rect = new Rectangle(10, 10, SideBarInnerWidth, 40);
                     var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
                     var position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)rect.Y + rect.Height / 2 - (size.Y / 2));
                     Raylib.DrawTextureNPatch(TextureManager.Instance.GetTexture(TextureKey.BlueBox), patch, rect, Vector2.Zero, 0f, Color.White);
                     Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
-                    text = string.Join("\n", VillageData.Instance.Resources.Select(x => $"{x.Key}: {x.Value}"));
-                    DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, 60));
+                    text = string.Join("\n", VillageData.Instance.Resources.Where(x => x.Value > 0).Select(x => $"{x.Key}: {x.Value}"));
+                    UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, 60));
 
+                    var yIndex = 0;
+                    var yStart = 300;
+                    var yIncrement = 35;
 
-                    foreach (var research in TechTree.Instance.Technologies)
+                    text = "Research";
+                    size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+                    position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex * yIncrement);
+                    Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+                    yStart += yIncrement;
+
+                    foreach (var research in TechTree.Instance.GetAvailableTechnologies())
                     {
-                        if (DrawButtonWithBackground(TextureKey.BlueBox, research.Name, new Vector2(10, 280)))
+                        if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, research.Name, new Vector2(10, yStart + yIndex * yIncrement)))
                         {
+                            research.Researched = true;
+                            foreach (var producerKey in research.ProductionToAdd)
+                            {
+                                ProducerStore.Instance.Producers[producerKey].IsAvailable = true;
+                            }
                         }
+                        yIndex++;
                     }
 
-                    //text = "Buy Farm";
-                    //rect = new Rectangle(10, 280, 230, 40);
-                    //size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                    //position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)rect.Y + rect.Height / 2 - (size.Y / 2));
+                    text = $"Jobs - Idle: {availableUnits.Count},  Total: {totalUnits}";
+                    size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+                    position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex * yIncrement);
+                    Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+                    yStart += yIncrement;
 
-                    //var color = Color.White;
-                    //if (Raylib.CheckCollisionPointRec(mousePos, rect))
-                    //{
-                    //    color = Color.Gray;
-                    //    if (Raylib.IsMouseButtonPressed(MouseButton.Left))
-                    //    {
-                    //        color = Color.DarkGray;
+                    foreach (var production in ProducerStore.Instance.GetAvailableProducers())
+                    {
+                        UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, production.Name, new Vector2(10, yStart + yIndex * yIncrement));
 
-                    //    }
-                    //}
+                        if (UiHelpers.DrawImageAsButton(TextureKey.ArrowSilverDown, new Vector2(200, yStart + yIndex * yIncrement + 5), 0f))
+                        {
+                            var deleted = false;
+                            world.Query(in producerQuery, (entity) =>
+                            {
+                                if (deleted) { return; }
+                                var productionUnit = entity.Get<ProductionUnit>();
+                                if (productionUnit.Producer == production.Key)
+                                {
+                                    world.Destroy(entity);
+                                    deleted = true;
+                                }
+                                allUnits.FirstOrDefault(x => x.Get<Unit>().AssignedTo == entity.Id).Get<Unit>().AssignedTo = 0;
+                            });
+                        }
 
-                    //Raylib.DrawTextureNPatch(TitleTexture, patch, rect, Vector2.Zero, 0f, color);
-                    //Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, "Buy Farm", position, 24, 0f, Color.Black);
+                        var unitsInRole = producers.FirstOrDefault(x => x.Key == production.Key).Value.ToString() ?? "0";
+                        Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, unitsInRole, new Vector2(260, yStart + yIndex * yIncrement), 24, 0f, Color.Black);
 
+                        if (UiHelpers.DrawImageAsButton(TextureKey.ArrowSilverUp, new Vector2(300, yStart + yIndex * yIncrement + 5), 0f))
+                        {
+                            var nextUnit = availableUnits.FirstOrDefault();
+                            if (nextUnit != default)
+                            {
+                                var producer = world.Create(ProducerStore.Producer);
+                                producer.Set(new ProductionUnit { Producer = production.Key });
+                                var render = new Render(TextureKey.MedievalSpriteSheet);
+                                render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarm));
+                                producer.Set(render);
+
+                                nextUnit.Get<Unit>().AssignedTo = producer.Id;
+                            }
+                        }
+                        yIndex++;
+                    }
                 }
             });
         }
 
-        private static void DrawTextWithBackground(TextureKey textureKey, string text, Vector2 position)
-        {
-            var patch = TextureManager.Instance.NPatchInfos[textureKey];
-            var texture = TextureManager.Instance.GetTexture(textureKey);
-
-            patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
-
-            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-            var rect = new Rectangle((int)position.X, (int)position.Y, 230, size.Y);
-            position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
-            rect.Height *= 1.35f;
-            Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, Color.White);
-            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
-        }
-
-        private static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position)
-        {
-            var mousePos = Raylib.GetMousePosition();
-            var color = Color.White;
-            var isClicked = false;
-
-            var patch = TextureManager.Instance.NPatchInfos[textureKey];
-            var texture = TextureManager.Instance.GetTexture(textureKey);
-
-            patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
-
-            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-            var rect = new Rectangle((int)position.X, (int)position.Y, 230, size.Y);
-            position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
-            rect.Height *= 1.35f;
-            if (Raylib.CheckCollisionPointRec(mousePos, rect))
-            {
-                color = Color.Gray;
-                if (Raylib.IsMouseButtonPressed(MouseButton.Left))
-                {
-                    color = Color.DarkGray;
-                    isClicked = true;
-                }
-            }
-            Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, color);
-            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
-
-
-            return isClicked;
-        }
     }
 }

@@ -23,6 +23,11 @@ namespace VillageIdle.Utilities
             TextureStore.Add(TextureKey.BrownBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_brown.png"));
             TextureStore.Add(TextureKey.BlueBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_blue.png"));
             TextureStore.Add(TextureKey.BeigeBox, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/panel_beige.png"));
+            TextureStore.Add(TextureKey.ArrowSilverRight, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/arrowSilver_right.png"));
+            TextureStore.Add(TextureKey.ArrowSilverDown, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/arrowSilver_down.png"));
+            TextureStore.Add(TextureKey.ArrowSilverLeft, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/arrowSilver_left.png"));
+            TextureStore.Add(TextureKey.ArrowSilverUp, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/arrowSilver_up.png"));
+
             TextureStore.Add(TextureKey.MedievalSpriteSheet, Raylib.LoadTexture("Assets/Kenney/RTS-Medieval/Spritesheet/medievalRTS_spritesheet@2.png"));
 
             var mostPatchInfos = new NPatchInfo
@@ -63,5 +68,10 @@ namespace VillageIdle.Utilities
         BlueBox,
         BeigeBox,
         MedievalSpriteSheet,
+        ArrowBlue,
+        ArrowSilverRight,
+        ArrowSilverUp,
+        ArrowSilverLeft,
+        ArrowSilverDown,
     }
 }

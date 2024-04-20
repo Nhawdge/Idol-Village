@@ -16,15 +16,17 @@ namespace VillageIdle.Scenes.World1.Systems
             world.Query(in query, (entity) =>
             {
                 var productionUnit = entity.Get<ProductionUnit>();
-                var render = entity.Get<Render>();
-                productionUnit.CurrentProduction += Raylib.GetFrameTime();
+                var producer = ProducerStore.Instance.Producers[productionUnit.Producer];
 
-                if (productionUnit.CurrentProduction >= productionUnit.ProductionTotal)
+                var render = entity.Get<Render>();
+                productionUnit.CurrentProduction += Raylib.GetFrameTime() * producer.ProducedPerSecond;
+
+                if (productionUnit.CurrentProduction >= producer.ProductionRequired)
                 {
-                    productionUnit.CurrentProduction -= productionUnit.ProductionTotal;
-                    VillageData.Instance.Resources[productionUnit.Resource] += productionUnit.ProductionValue;
+                    productionUnit.CurrentProduction -= producer.ProductionRequired;
+                    VillageData.Instance.Resources[producer.Resource] += producer.ResourceAmountProduced;
                 }
-                if (productionUnit.CurrentProduction > productionUnit.ProductionTotal * .75f)
+                if (productionUnit.CurrentProduction > producer.ProductionRequired * .75f)
                 {
                     render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarmHarvest));
                 }
@@ -33,8 +35,10 @@ namespace VillageIdle.Scenes.World1.Systems
                     render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarm));
                 }
                 var color = Color.Red;
-                color = Raylib.ColorAlpha(color, productionUnit.CurrentProduction / productionUnit.ProductionTotal);
-                Raylib.DrawCircle((int)render.Position.X, (int)render.Position.Y-75, 10, color);
+                //color = Raylib.ColorAlpha(color, productionUnit.CurrentProduction / producer.ProductionRequired);
+                Raylib.DrawCircle((int)render.Position.X, (int)render.Position.Y - 75, 10, color);
+
+                Raylib.DrawRing(render.Position, 10, 15, 0, productionUnit.CurrentProduction / producer.ProductionRequired, 0, color);
             });
         }
     }
