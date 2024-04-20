@@ -40,13 +40,13 @@ namespace VillageIdle.Scenes.World1
                                 _ => SpriteKey.Tree4
                             };
                             var treeRender = new Render(TextureKey.MedievalSpriteSheet);
-                            treeRender.Position = new Vector2(x * 128, y * 128);
+                            treeRender.Position = new Vector2(x * 128 + Random.Shared.Next(0, 128), y * 128 + Random.Shared.Next(0, 128));
                             treeRender.SetSource(SpriteSheetStore.Instance.GetDecorSheetSource(treeVersion));
                             World.Create(treeRender, new StructureLayer());
                             if (blue > 120)
                             {
                                 treeRender = new Render(TextureKey.MedievalSpriteSheet);
-                                treeRender.Position = new Vector2(x * 128, y * 128);
+                                treeRender.Position = new Vector2(x * 128 + Random.Shared.Next(0, 128), y * 128 + Random.Shared.Next(0, 128));
                                 treeRender.SetSource(SpriteSheetStore.Instance.GetDecorSheetSource(treeVersion));
                                 World.Create(treeRender, new StructureLayer());
                             }

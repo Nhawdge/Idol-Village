@@ -51,7 +51,7 @@ namespace VillageIdle.Scenes.World1.Systems
             var mousePos = Raylib.GetMousePosition();
             world.Query(in query, (entity) =>
             {
-                if (entity.Id == Singleton.Instance.SelectedUnit)
+                if (entity.Id != Singleton.Instance.SelectedUnit)
                 {
                     return;
                 }
@@ -65,30 +65,37 @@ namespace VillageIdle.Scenes.World1.Systems
                     Layout = NPatchLayout.NinePatch
                 };
 
+                var yIndex = 0;
+                var yStart = 10;
+                var yIncrement = 35;
+
                 var backgroundTexture = TextureManager.Instance.GetTexture(TextureKey.BrownBox);
 
+                // UI Panel
                 patch.Source = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
                 Raylib.DrawTextureNPatch(backgroundTexture, patch, new Rectangle(0, 0, SideBarWidth, Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
 
+                // Title
                 var text = "Pavekstan";
                 var rect = new Rectangle(10, 10, SideBarInnerWidth, 40);
                 var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                var position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)rect.Y + rect.Height / 2 - (size.Y / 2));
-                Raylib.DrawTextureNPatch(TextureManager.Instance.GetTexture(TextureKey.BlueBox), patch, rect, Vector2.Zero, 0f, Color.White);
-                Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+                var position = new Vector2(10, yStart + yIndex++ * yIncrement);
+                UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, position, true);
 
-                text = string.Join("\n", VillageData.Instance.Resources.Where(x => x.Value > 0).Select(x => $"{x.Key}: {x.Value}"));
-                UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, 60));
+                var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value > 0);
+                if (resourcesWithValues.Count() > 0)
+                {
+                    text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value}"));
 
-                var yIndex = 0;
-                var yStart = 300;
-                var yIncrement = 35;
+                    UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, 60));
+                    size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+                    yStart += (int)size.Y + 30;
+                }
 
                 text = "Research";
                 size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex * yIncrement);
+                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
                 Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
-                yStart += yIncrement;
 
                 foreach (var research in TechTree.Instance.GetAvailableTechnologies())
                 {
@@ -129,9 +136,8 @@ namespace VillageIdle.Scenes.World1.Systems
 
                 text = $"Jobs - Idle: {availableUnits.Count},  Total: {totalUnits}";
                 size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex * yIncrement);
+                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
                 Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
-                yStart += yIncrement;
 
                 foreach (var production in ProducerStore.Instance.GetAvailableProducers())
                 {
@@ -161,12 +167,14 @@ namespace VillageIdle.Scenes.World1.Systems
 
                     if (UiHelpers.DrawImageAsButton(TextureKey.ArrowSilverUp, new Vector2(300, yStart + yIndex * yIncrement + 5), availableUnits.Count <= 0))
                     {
+                        Console.WriteLine($"Up Clicked on {production.Name}");
                         var nextUnit = availableUnits.FirstOrDefault();
                         if (nextUnit != default)
                         {
                             var producer = world.Create(ProducerStore.Producer);
                             producer.Set(new ProductionUnit { Producer = production.Key });
                             var render = new Render(TextureKey.MedievalSpriteSheet);
+                            render.Position = new Vector2(50 * 128, 50 * 128);
                             render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarm));
                             producer.Set(render);
 

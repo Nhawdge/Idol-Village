@@ -35,10 +35,9 @@ namespace VillageIdle.Scenes.World1.Systems
                     render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarm));
                 }
                 var color = Color.Red;
-                //color = Raylib.ColorAlpha(color, productionUnit.CurrentProduction / producer.ProductionRequired);
-                Raylib.DrawCircle((int)render.Position.X, (int)render.Position.Y - 75, 10, color);
 
-                Raylib.DrawRing(render.Position, 10, 15, 0, productionUnit.CurrentProduction / producer.ProductionRequired, 0, color);
+                var percentDone = productionUnit.CurrentProduction / producer.ProductionRequired;
+                Raylib.DrawRing(render.Position with { Y = render.Position.Y - 75 }, 5, 15, 270, 270 + 360 * percentDone, 100, color);
             });
         }
     }
