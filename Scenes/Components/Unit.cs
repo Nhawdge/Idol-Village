@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Arch.Core;
+using System.Numerics;
 
 namespace VillageIdle.Scenes.Components
 {
@@ -6,7 +7,7 @@ namespace VillageIdle.Scenes.Components
     {
         public UnitActions CurrentAction = UnitActions.Idle;
         public Vector2 MovementGoal = new Vector2(0, 0);
-        public int AssignedTo = -1;
+        public EntityReference AssignedTo;
         public HealthStatus Health = HealthStatus.Healthy;
         public int HealthValue = 100;
         public int HealthStatusDuration = 0;

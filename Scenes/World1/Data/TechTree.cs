@@ -38,17 +38,20 @@
                 Prerequisites = new List<Technology> { Technologies[0] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Hunting },
+                Costs = new() { { Resource.Food, 3 } }
+
             });
 
             Technologies.Add(new Technology
             {
                 Name = "Farming",
-                Description = "Unlocks the ability to farm crops .",
+                Description = "Unlocks the ability to farm crops.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<Technology> { Technologies[0], Technologies[1] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Farm },
+                Costs = new() { { Resource.Food, 30 } }
 
             });
 
@@ -65,7 +68,8 @@
         internal float ResearchCost = 0f;
         internal float ResearchTime = 0f;
         internal float ResearchProgress = 0f;
-        internal List<ProducerTypes> ProductionToAdd;
+        internal List<ProducerTypes> ProductionToAdd = new();
+        internal Dictionary<Resource, int> Costs = new();
     }
 
     // - gathering - 30% consistent, 5% chance to return toxic berries/flora

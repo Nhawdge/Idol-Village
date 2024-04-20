@@ -29,9 +29,10 @@ namespace VillageIdle.Scenes.World1.Helpers
             Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
         }
 
-        internal static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position, bool centered = false)
+        internal static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position, bool isDisabled = false, bool centered = false)
         {
             var mousePos = Raylib.GetMousePosition();
+
             var color = Color.White;
             var isClicked = false;
 
@@ -48,7 +49,8 @@ namespace VillageIdle.Scenes.World1.Helpers
                 position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
 
             rect.Height *= 1.35f;
-            if (Raylib.CheckCollisionPointRec(mousePos, rect))
+
+            if (!isDisabled && Raylib.CheckCollisionPointRec(mousePos, rect))
             {
                 color = Color.Gray;
                 if (Raylib.IsMouseButtonPressed(MouseButton.Left))
@@ -57,6 +59,9 @@ namespace VillageIdle.Scenes.World1.Helpers
                     isClicked = true;
                 }
             }
+            if (isDisabled)
+                color = Color.Red;
+
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, color);
             Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
@@ -64,7 +69,7 @@ namespace VillageIdle.Scenes.World1.Helpers
             return isClicked;
         }
 
-        internal static bool DrawImageAsButton(TextureKey textureKey, Vector2 position, float rotation = 0f)
+        internal static bool DrawImageAsButton(TextureKey textureKey, Vector2 position, bool isDisabled =false)
         {
             var mousePos = Raylib.GetMousePosition();
             var color = Color.White;
@@ -74,7 +79,7 @@ namespace VillageIdle.Scenes.World1.Helpers
 
             var rect = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
-            if (Raylib.CheckCollisionPointRec(mousePos, rect))
+            if (!isDisabled && Raylib.CheckCollisionPointRec(mousePos, rect))
             {
                 color = Color.Gray;
                 if (Raylib.IsMouseButtonPressed(MouseButton.Left))
@@ -83,7 +88,9 @@ namespace VillageIdle.Scenes.World1.Helpers
                     isClicked = true;
                 }
             }
-            Raylib.DrawTextureEx(texture, position, rotation, 1f, color);
+            if (isDisabled)
+                color = Color.Red;
+            Raylib.DrawTextureEx(texture, position, 0f, 1f, color);
             return isClicked;
         }
     }
