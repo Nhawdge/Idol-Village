@@ -16,7 +16,6 @@ namespace VillageIdle.Scenes.World1.Systems
                 var unit = entity.Get<Unit>();
                 if (unit.MovementGoal != Vector2.Zero)
                 {
-
                     var direction = unit.MovementGoal - render.Position;
                     var distance = direction.Length();
                     if ( distance> 5)

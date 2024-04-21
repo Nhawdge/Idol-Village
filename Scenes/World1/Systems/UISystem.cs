@@ -14,7 +14,7 @@ namespace VillageIdle.Scenes.World1.Systems
     {
         private static readonly int SideBarWidth = 350;
         private static readonly int SideBarPadding = 10;
-        private static readonly int SideBarInnerWidth = 330;
+        private static readonly int SideBarInnerWidth = SideBarWidth - (SideBarPadding * 2);
         internal override void Update(World world) { }
         internal override void UpdateNoCamera(World world)
         {
@@ -33,21 +33,21 @@ namespace VillageIdle.Scenes.World1.Systems
 
             var unitQuery = new QueryDescription().WithAll<Unit>();
 
-            var availableUnits = new List<Entity>();
+            var availableUnits = new List<EntityReference>();
             var totalUnits = 0;
-            var allUnits = new List<Entity>();
+            var allUnits = new List<EntityReference>();
             world.Query(in unitQuery, (entity) =>
             {
                 var unit = entity.Get<Unit>();
                 if (!unit.AssignedTo.IsAlive())
                 {
-                    availableUnits.Add(entity);
+                    availableUnits.Add(entity.Reference());
                 }
-                allUnits.Add(entity);
+                allUnits.Add(entity.Reference());
                 totalUnits++;
             });
 
-            var query = new QueryDescription().WithAny<Interactable>();
+            var query = new QueryDescription().WithAll<Interactable>();//.WithAny<Unit, VillageCenter>();
             var mousePos = Raylib.GetMousePosition();
             world.Query(in query, (entity) =>
             {
@@ -56,6 +56,7 @@ namespace VillageIdle.Scenes.World1.Systems
                     return;
                 }
                 var interactable = entity.Get<Interactable>();
+
                 var patch = new NPatchInfo
                 {
                     Left = 10,
@@ -82,6 +83,7 @@ namespace VillageIdle.Scenes.World1.Systems
                 var position = new Vector2(10, yStart + yIndex++ * yIncrement);
                 UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, position, true);
 
+                // Resources
                 var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value > 0);
                 if (resourcesWithValues.Count() > 0)
                 {
@@ -92,6 +94,32 @@ namespace VillageIdle.Scenes.World1.Systems
                     yStart += (int)size.Y + 30;
                 }
 
+                // Units
+                text = "Units";
+                size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
+                Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+
+                foreach (var unit in UnitStore.AvailableUnits())
+                {
+                    var unitName = unit.ToString();
+                    var isAvailable = UnitStore.Instance.IsUnitAvailable(unit);
+                    var costString = "Costs:\n" + string.Join("\n", UnitStore.Instance.UnitCosts[unit].Select(x => $"{x.Key}: {x.Value}")) ;
+                    if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, unitName, new Vector2(10, yStart + yIndex * yIncrement), costString, !isAvailable))
+                    {
+                        UnitStore.CreateUnit(world, unit);
+                        if (isAvailable)
+                        {
+                            foreach (var cost in UnitStore.Instance.UnitCosts[unit])
+                            {
+                                VillageData.Instance.Resources[cost.Key] -= cost.Value;
+                            }
+                        }
+                    }
+                    yIndex++;
+                }
+
+                // Research
                 text = "Research";
                 size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
                 position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
@@ -104,21 +132,20 @@ namespace VillageIdle.Scenes.World1.Systems
                     {
                         foreach (var cost in research.Costs)
                         {
-                            if (VillageData.Instance.Resources[cost.Key] <= cost.Value)
+                            if (VillageData.Instance.Resources[cost.Key] < cost.Value)
                             {
                                 canAfford = false;
                                 break;
                             }
                         }
                     }
-
-                    if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, $"{research.Name}", new Vector2(10, yStart + yIndex * yIncrement), !canAfford))
+                    var costString = "Costs:\n" + string.Join(", ", research.Costs.Select(x => $"{x.Key}: {x.Value}"));
+                    if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, $"{research.Name}", new Vector2(10, yStart + yIndex * yIncrement), costString, !canAfford))
                     {
                         if (!canAfford)
                         {
                             continue;
                         }
-
                         foreach (var cost in research.Costs)
                         {
                             VillageData.Instance.Resources[cost.Key] -= cost.Value;
@@ -153,13 +180,16 @@ namespace VillageIdle.Scenes.World1.Systems
                             var productionUnit = entity.Get<ProductionUnit>();
                             if (productionUnit.Producer == production.Key)
                             {
-                                world.Destroy(entity);
                                 deleted = true;
-                            }
 
-                            var assignedUnit = allUnits.FirstOrDefault(x => x.Get<Unit>().AssignedTo == entity);
-                            var aUnit = assignedUnit.Get<Unit>();
-                            aUnit.AssignedTo = EntityReference.Null;
+                                var assignedUnit = allUnits.FirstOrDefault(x => x.Entity.Get<Unit>().AssignedTo == entity);
+                                if (assignedUnit != Entity.Null && entity.Has<Unit>())
+                                {
+                                    var aUnit = assignedUnit.Entity.Get<Unit>();
+                                    aUnit.AssignedTo = EntityReference.Null;
+                                }
+                                world.Destroy(entity);
+                            }
                         });
                     }
 
@@ -167,18 +197,24 @@ namespace VillageIdle.Scenes.World1.Systems
 
                     if (UiHelpers.DrawImageAsButton(TextureKey.ArrowSilverUp, new Vector2(300, yStart + yIndex * yIncrement + 5), availableUnits.Count <= 0))
                     {
-                        Console.WriteLine($"Up Clicked on {production.Name}");
                         var nextUnit = availableUnits.FirstOrDefault();
                         if (nextUnit != default)
                         {
                             var producer = world.Create(ProducerStore.Producer);
+                            producer.Set(new StructureLayer());
                             producer.Set(new ProductionUnit { Producer = production.Key });
                             var render = new Render(TextureKey.MedievalSpriteSheet);
-                            render.Position = new Vector2(50 * 128, 50 * 128);
-                            render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarm));
+                            render.SetSource(SpriteSheetStore.Instance.GetDecorSheetSource(SpriteKey.Bushes));
+
+                            var worldCenter = new Vector2(50 * 128, 50 * 128);
+                            var spread = 50 * totalUnits;
+                            render.Position = worldCenter + new Vector2(Random.Shared.Next(-spread, spread), Random.Shared.Next(-spread, spread));
                             producer.Set(render);
 
-                            nextUnit.Get<Unit>().AssignedTo = producer.Reference();
+                            var nextUnitUnit = nextUnit.Entity.Get<Unit>();
+
+                            nextUnitUnit.AssignedTo = producer.Reference();
+                            nextUnitUnit.MovementGoal = render.Position;
                         }
                     }
                     yIndex++;

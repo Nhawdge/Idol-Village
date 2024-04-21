@@ -3,7 +3,6 @@ using Arch.Core.Extensions;
 using Raylib_cs;
 using VillageIdle.Scenes.Components;
 using VillageIdle.Scenes.World1.Data;
-using VillageIdle.Utilities;
 
 namespace VillageIdle.Scenes.World1.Systems
 {
@@ -26,14 +25,7 @@ namespace VillageIdle.Scenes.World1.Systems
                     productionUnit.CurrentProduction -= producer.ProductionRequired;
                     VillageData.Instance.Resources[producer.Resource] += producer.ResourceAmountProduced;
                 }
-                if (productionUnit.CurrentProduction > producer.ProductionRequired * .75f)
-                {
-                    render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarmHarvest));
-                }
-                else
-                {
-                    render.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(SpriteKey.BigFarm));
-                }
+
                 var color = Color.Red;
 
                 var percentDone = productionUnit.CurrentProduction / producer.ProductionRequired;

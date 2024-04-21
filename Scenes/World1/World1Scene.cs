@@ -80,6 +80,7 @@ namespace VillageIdle.Scenes.World1
                 Systems.Add(new RecruitmentSystem());
                 Systems.Add(new UnitMovementSystem());
                 Systems.Add(new ProductionSystem());
+                Systems.Add(new ToolTipSystem()); // Always last plz
             });
 
             base.LoadingTasks.Add("Ready", () =>

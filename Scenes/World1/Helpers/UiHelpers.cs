@@ -1,5 +1,6 @@
 ﻿using Raylib_cs;
 using System.Numerics;
+using System.Reflection.PortableExecutable;
 using VillageIdle.Utilities;
 
 namespace VillageIdle.Scenes.World1.Helpers
@@ -9,6 +10,7 @@ namespace VillageIdle.Scenes.World1.Helpers
         private static readonly int SideBarWidth = 350;
         private static readonly int SideBarPadding = 10;
         private static readonly int SideBarInnerWidth = 330;
+        private static string toolTipText = "";
 
         internal static void DrawTextWithBackground(TextureKey textureKey, string text, Vector2 position, bool centered = false)
         {
@@ -29,9 +31,10 @@ namespace VillageIdle.Scenes.World1.Helpers
             Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
         }
 
-        internal static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position, bool isDisabled = false, bool centered = false)
+        internal static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position, string toolTip, bool isDisabled = false, bool centered = false)
         {
             var mousePos = Raylib.GetMousePosition();
+
 
             var color = Color.White;
             var isClicked = false;
@@ -50,8 +53,12 @@ namespace VillageIdle.Scenes.World1.Helpers
 
             rect.Height *= 1.35f;
 
-            if (!isDisabled && Raylib.CheckCollisionPointRec(mousePos, rect))
+            if (Raylib.CheckCollisionPointRec(mousePos, rect))
             {
+                if (!string.IsNullOrEmpty(toolTip))
+                {
+                    toolTipText = toolTip;
+                }
                 color = Color.Gray;
                 if (Raylib.IsMouseButtonPressed(MouseButton.Left))
                 {
@@ -60,16 +67,18 @@ namespace VillageIdle.Scenes.World1.Helpers
                 }
             }
             if (isDisabled)
+            {
+                isClicked = false;
                 color = Color.Red;
+            }
 
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, color);
             Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
-
             return isClicked;
         }
 
-        internal static bool DrawImageAsButton(TextureKey textureKey, Vector2 position, bool isDisabled =false)
+        internal static bool DrawImageAsButton(TextureKey textureKey, Vector2 position, bool isDisabled = false)
         {
             var mousePos = Raylib.GetMousePosition();
             var color = Color.White;
@@ -89,9 +98,38 @@ namespace VillageIdle.Scenes.World1.Helpers
                 }
             }
             if (isDisabled)
+            {
+                isClicked = false;
                 color = Color.Red;
+            }
             Raylib.DrawTextureEx(texture, position, 0f, 1f, color);
             return isClicked;
+        }
+
+        internal static void DrawToolTipOnMouse()
+        {
+            if (string.IsNullOrEmpty(toolTipText)) return;
+            var textureKey = TextureKey.BlueBox;
+            var text = toolTipText;
+            var position = Raylib.GetMousePosition();
+            position.X += 10;
+            position.Y += 10;
+
+            var patch = TextureManager.Instance.NPatchInfos[textureKey];
+            var texture = TextureManager.Instance.GetTexture(textureKey);
+
+            patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
+
+            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+            var rect = new Rectangle((int)position.X, (int)position.Y, SideBarInnerWidth, size.Y);
+
+            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
+
+            rect.Height *= 1.35f;
+            toolTipText = string.Empty;
+
+            Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, Color.White);
+            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
         }
     }
 }

@@ -51,8 +51,31 @@
                 Prerequisites = new List<Technology> { Technologies[0], Technologies[1] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Farm },
-                Costs = new() { { Resource.Food, 30 } }
+                Costs = new() { { Resource.Food, 10 } }
+            });
 
+            Technologies.Add(new Technology
+            {
+                Name = "Forestry",
+                Description = "Unlocks the ability to gain wood.",
+                ResearchCost = 10f,
+                ResearchTime = 10f,
+                Prerequisites = new List<Technology> { Technologies[0], Technologies[1] },
+                Researched = false,
+                ProductionToAdd = new() { ProducerTypes.Wood },
+                Costs = new() { { Resource.Food, 10 } }
+            });
+
+            Technologies.Add(new Technology
+            {
+                Name = "Lumbermill",
+                Description = "Unlocks the Lumber mill.",
+                ResearchCost = 10f,
+                ResearchTime = 10f,
+                Prerequisites = new List<Technology> { Technologies[3] },
+                Researched = false,
+                ProductionToAdd = new() { ProducerTypes.Lumber },
+                Costs = new() { { Resource.Wood, 10 } }
             });
 
 

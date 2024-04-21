@@ -8,7 +8,7 @@ namespace VillageIdle.Scenes.World1.Data
         internal static ProducerStore Instance = new();
         internal Dictionary<ProducerTypes, Producer> Producers = new();
 
-        internal static readonly ComponentType[] Producer = [typeof(ProductionUnit), typeof(Render)];
+        internal static readonly ComponentType[] Producer = [typeof(ProductionUnit), typeof(Render), typeof(StructureLayer)];
         internal List<Producer> GetAvailableProducers() => Producers.Values.Where(x => x.IsAvailable).ToList();
 
         private ProducerStore()
@@ -22,7 +22,7 @@ namespace VillageIdle.Scenes.World1.Data
             {
                 Key = ProducerTypes.Gathering,
                 Name = "Gathering",
-                ProductionRequired = 20f,
+                ProductionRequired = 10f,
                 ProducedPerSecond = 1f,
                 ResourceAmountProduced = 1f,
                 Resource = Resource.Food,
@@ -33,7 +33,7 @@ namespace VillageIdle.Scenes.World1.Data
             {
                 Key = ProducerTypes.Hunting,
                 Name = "Hunting",
-                ProductionRequired = 15f,
+                ProductionRequired = 5f,
                 ProducedPerSecond = 1f,
                 ResourceAmountProduced = 1f,
                 Resource = Resource.Food,
@@ -51,6 +51,29 @@ namespace VillageIdle.Scenes.World1.Data
                 ChanceToSucceed = 1f,
                 FailureAction = () => { }
             });
+            Producers.Add(ProducerTypes.Wood, new Producer
+            {
+                Key = ProducerTypes.Wood,
+                Name = "Forestry",
+                ProductionRequired = 10f,
+                ProducedPerSecond = 1f,
+                ResourceAmountProduced = 1f,
+                Resource = Resource.Wood,
+                ChanceToSucceed = 1f,
+                FailureAction = () => { }
+            });
+            Producers.Add(ProducerTypes.Lumber, new Producer
+            {
+                Key = ProducerTypes.Lumber,
+                Name = "Lumber",
+                ProductionRequired = 10f,
+                ProducedPerSecond = 1f,
+                ResourceAmountProduced = 1f,
+                Resource = Resource.Lumber,
+                ChanceToSucceed = 1f,
+                Requires = new Dictionary<ProducerTypes, int> { { ProducerTypes.Wood, 1 } },
+                FailureAction = () => { }
+            });
         }
     }
 
@@ -65,6 +88,7 @@ namespace VillageIdle.Scenes.World1.Data
         public Action FailureAction = () => { };
         public bool IsAvailable = false;
         internal ProducerTypes Key;
+        internal Dictionary<ProducerTypes, int> Requires;
     }
     public enum ProducerTypes
     {
@@ -72,5 +96,7 @@ namespace VillageIdle.Scenes.World1.Data
         Gathering,
         Hunting,
         Farm,
+        Wood,
+        Lumber,
     }
 }
