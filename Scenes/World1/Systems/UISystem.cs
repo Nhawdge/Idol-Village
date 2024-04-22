@@ -86,7 +86,7 @@ namespace IdolVillage.Scenes.World1.Systems
 
                 // Resources
                 var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value >= 0);
-                if (resourcesWithValues.Count() > 0)
+                if (resourcesWithValues.Any())
                 {
                     text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value}"));
 
@@ -198,9 +198,9 @@ namespace IdolVillage.Scenes.World1.Systems
 
                     if (UiHelpers.DrawImageAsButton(TextureKey.ArrowSilverUp, new Vector2(300, yStart + yIndex * yIncrement + 5), availableUnits.Count <= 0))
                     {
-                        var nextUnit = availableUnits.FirstOrDefault();
-                        if (nextUnit != default)
-                        {
+                        //var nextUnit = availableUnits.FirstOrDefault();
+                        //if (nextUnit != default)
+                        //{
                             var producer = world.Create(ProducerStore.Producer);
                             producer.Set(new StructureLayer());
                             producer.Set(new Interactable());
@@ -212,11 +212,11 @@ namespace IdolVillage.Scenes.World1.Systems
                             render.Position = worldCenter + new Vector2(Random.Shared.Next(-spread, spread), Random.Shared.Next(-spread, spread));
                             producer.Set(render);
 
-                            var nextUnitUnit = nextUnit.Entity.Get<Unit>();
+                        //    var nextUnitUnit = nextUnit.Entity.Get<Unit>();
 
-                            nextUnitUnit.AssignedTo = producer.Reference();
-                            nextUnitUnit.MovementGoal = render.Position;
-                        }
+                        //    nextUnitUnit.AssignedTo = producer.Reference();
+                        //    nextUnitUnit.MovementGoal = render.Position;
+                        //}
                     }
                     yIndex++;
                 }

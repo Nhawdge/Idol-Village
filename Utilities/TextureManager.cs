@@ -29,6 +29,7 @@ namespace IdolVillage.Utilities
             TextureStore.Add(TextureKey.ArrowSilverUp, Raylib.LoadTexture("Assets/Kenney/UI-Adventure-Pack/PNG/arrowSilver_up.png"));
 
             TextureStore.Add(TextureKey.MedievalSpriteSheet, Raylib.LoadTexture("Assets/Kenney/RTS-Medieval/Spritesheet/medievalRTS_spritesheet@2.png"));
+            TextureStore.Add(TextureKey.MainLogo, Raylib.LoadTexture("Assets/Logo.png"));
 
             var mostPatchInfos = new NPatchInfo
             {
@@ -73,5 +74,6 @@ namespace IdolVillage.Utilities
         ArrowSilverUp,
         ArrowSilverLeft,
         ArrowSilverDown,
+        MainLogo,
     }
 }

@@ -18,10 +18,9 @@
             }
             else
             {
-                Resources.Add(resource, amount);
+                Resources.Add(resource, amount + 1);
             }
         }
-
 
         internal static VillageData Instance = new();
 

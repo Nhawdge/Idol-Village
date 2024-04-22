@@ -1,6 +1,7 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using IdolVillage.Extensions;
+using IdolVillage.Scenes.Components;
 using IdolVillage.Scenes.MainMenu.Components;
 using IdolVillage.Utilities;
 using Raylib_cs;
@@ -28,6 +29,11 @@ namespace IdolVillage.Scenes.MainMenu.Systems
 
             patch.Source = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
             Raylib.DrawTextureNPatch(backgroundTexture, patch, new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
+
+            if (IdolVillageEngine.Instance.ActiveScene is MainMenuScene mainMenu)
+            {
+                mainMenu.Logo.Draw();
+            }
 
             var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton, UiSlider>();
             var uiElementCount = world.CountEntities(in query);
