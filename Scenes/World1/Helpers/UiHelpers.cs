@@ -60,7 +60,7 @@ namespace VillageIdle.Scenes.World1.Helpers
                     toolTipText = toolTip;
                 }
                 color = Color.Gray;
-                if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+                if (InteractionHelper.GetMouseClick(MouseButton.Left))
                 {
                     color = Color.DarkGray;
                     isClicked = true;
@@ -91,7 +91,7 @@ namespace VillageIdle.Scenes.World1.Helpers
             if (!isDisabled && Raylib.CheckCollisionPointRec(mousePos, rect))
             {
                 color = Color.Gray;
-                if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+                if (InteractionHelper.GetMouseClick(MouseButton.Left))
                 {
                     color = Color.DarkGray;
                     isClicked = true;
@@ -111,6 +111,7 @@ namespace VillageIdle.Scenes.World1.Helpers
             if (string.IsNullOrEmpty(toolTipText)) return;
             var textureKey = TextureKey.BlueBox;
             var text = toolTipText;
+            var textSize = 24;
             var position = Raylib.GetMousePosition();
             position.X += 10;
             position.Y += 10;
@@ -120,16 +121,17 @@ namespace VillageIdle.Scenes.World1.Helpers
 
             patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
 
-            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, textSize, 0);
             var rect = new Rectangle((int)position.X, (int)position.Y, SideBarInnerWidth, size.Y);
 
             position = new Vector2((int)(rect.X + 10), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
 
-            rect.Height *= 1.35f;
+            //rect.Height *= 1.3f;
+            rect.Height += size.Y / 24 * 8;
             toolTipText = string.Empty;
 
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, Color.White);
-            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, textSize, 0f, Color.Black);
         }
     }
 }

@@ -6,9 +6,23 @@
         {
             foreach (Resource resource in Enum.GetValues(typeof(Resource)))
             {
-                Resources.Add(resource, 0);
+                Resources.Add(resource, -1);
             }
         }
+
+        internal void AddResource(Resource resource, double amount)
+        {
+            if (Resources.ContainsKey(resource))
+            {
+                Resources[resource] += amount;
+            }
+            else
+            {
+                Resources.Add(resource, amount);
+            }
+        }
+
+
         internal static VillageData Instance = new();
 
         internal float TotalPrestige = 1f;
@@ -20,18 +34,24 @@
     public enum Resource
     {
         None,
-        Food,
-        Wood,
-        Wool,
-        MetalOre,
-        Stone,
-        Meals,
-        Lumber,
-        Cloth,
-        Metal,
-        Gold,
+        Veggies,
+        Protien,
+        Pelt,
         Leather,
-        Tools,
+        Grain,
+        Flour,
+        Wood,
+        Lumber,
         BuildingMaterial,
+        Tools,
+        GoldOre,
+        Coins,
+        Stone,
+        StoneBuildingMaterials,
+        MetalOre,
+        Metal,
+        Meals,
+        Wool,
+        Cloth,
     }
 }

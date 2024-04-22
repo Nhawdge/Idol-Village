@@ -1,6 +1,7 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using System.Numerics;
+using VillageIdle.Extensions;
 using VillageIdle.Scenes.Components;
 
 namespace VillageIdle.Scenes.World1.Systems
@@ -18,13 +19,23 @@ namespace VillageIdle.Scenes.World1.Systems
                 {
                     var direction = unit.MovementGoal - render.Position;
                     var distance = direction.Length();
-                    if ( distance> 5)
+                    if (distance > 5)
                     {
                         direction = Vector2.Normalize(direction);
                         render.Position += direction * 5;
+                        unit.CurrentAction = Unit.UnitActions.Move;
                     }
                     else
                     {
+                        if (unit.AssignedTo != default)
+                        {
+                            var assignedToRender = unit.AssignedTo.Entity.Get<Render>();
+
+                            if (assignedToRender.Position.DistanceTo(render.Position) < 10)
+                            {
+                                unit.CurrentAction = Unit.UnitActions.Work;
+                            }
+                        }
                         unit.MovementGoal = Vector2.Zero;
                     }
                 }

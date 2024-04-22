@@ -8,7 +8,7 @@ namespace VillageIdle.Scenes.Components
     {
         public Texture2D Texture;
         public bool IsFlipped = false;
-        public OriginAlignment OriginPos = OriginAlignment.Center;
+        public OriginAlignment OriginPos = OriginAlignment.LeftTop;
         public int Column = 0;
         public int Row = 0;
         public int SourceX = 0;
@@ -90,6 +90,14 @@ namespace VillageIdle.Scenes.Components
             get => new Rectangle(
                     Position.X,
                     Position.Y,
+                    SpriteWidth * Scale,
+                    SpriteHeight * Scale);
+        }
+        public virtual Rectangle CollisionDestination
+        {
+            get => new Rectangle(
+                    Position.X - Origin.X,
+                    Position.Y - Origin.Y,
                     SpriteWidth * Scale,
                     SpriteHeight * Scale);
         }

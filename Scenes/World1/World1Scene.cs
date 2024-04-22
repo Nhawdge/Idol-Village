@@ -59,7 +59,6 @@ namespace VillageIdle.Scenes.World1
                 center.Color = Color.White;
                 center.Position.X = 50 * 128;
                 center.Position.Y = 50 * 128;
-                center.OriginPos = Render.OriginAlignment.LeftTop;
                 World.Create(center, new StructureLayer(), new Interactable());
 
                 //var treeRender = new Render(TextureKey.MedievalSpriteSheet);

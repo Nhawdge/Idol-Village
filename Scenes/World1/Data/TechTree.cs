@@ -38,8 +38,7 @@
                 Prerequisites = new List<Technology> { Technologies[0] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Hunting },
-                Costs = new() { { Resource.Food, 3 } }
-
+                Costs = new() { { Resource.Veggies, 3 } }
             });
 
             Technologies.Add(new Technology
@@ -51,7 +50,10 @@
                 Prerequisites = new List<Technology> { Technologies[0], Technologies[1] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Farm },
-                Costs = new() { { Resource.Food, 10 } }
+                Costs = new() {
+                    { Resource.Veggies, 10 },
+                    { Resource.Protien, 10 },
+                }
             });
 
             Technologies.Add(new Technology
@@ -63,7 +65,10 @@
                 Prerequisites = new List<Technology> { Technologies[0], Technologies[1] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Wood },
-                Costs = new() { { Resource.Food, 10 } }
+                Costs = new() {
+                    { Resource.Veggies, 10 },
+                    { Resource.Protien, 10 }
+                }
             });
 
             Technologies.Add(new Technology
@@ -75,10 +80,10 @@
                 Prerequisites = new List<Technology> { Technologies[3] },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Lumber },
-                Costs = new() { { Resource.Wood, 10 } }
+                Costs = new() {
+                    { Resource.Wood, 10 }
+                }
             });
-
-
         }
     }
 

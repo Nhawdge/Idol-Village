@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using Raylib_cs;
 using VillageIdle.Scenes.Components;
 using VillageIdle.Scenes.World1.Data;
+using VillageIdle.Utilities;
 
 namespace VillageIdle.Scenes.World1.Systems
 {
@@ -16,10 +17,10 @@ namespace VillageIdle.Scenes.World1.Systems
             {
                 var interactable = entity.Get<Interactable>();
                 var render = entity.Get<Render>();
-                if (Raylib.CheckCollisionPointRec(mousePos, render.Destination))
+                if (Raylib.CheckCollisionPointRec(mousePos, render.CollisionDestination))
                 {
                     render.Color = Color.Gray;
-                    if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+                    if (InteractionHelper.GetMouseClick(MouseButton.Left))
                     {
                         if (Singleton.Instance.SelectedUnit == entity.Id)
                             Singleton.Instance.SelectedUnit = -1;

@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using System.Numerics;
 using VillageIdle.Scenes.Components;
 using VillageIdle.Scenes.World1.Data;
 using VillageIdle.Utilities;
@@ -14,10 +15,10 @@ namespace VillageIdle.Scenes.World1.Systems
             {
                 var render = new Render(TextureKey.MedievalSpriteSheet);
                 render.SetSource(SpriteSheetStore.Instance.GetUnitSheetSource(SpriteKey.Woman));
-                render.OriginPos = Render.OriginAlignment.LeftTop;
+                render.Position = new Vector2(50 * 128, 50 * 128);
                 var unit = new Unit
                 {
-                    MovementGoal = new System.Numerics.Vector2(50 * 128, 50 * 128)
+                    MovementGoal = new Vector2(50 * 128, 50 * 128)
                 };
                 world.Create(render, unit, new Interactable(), new UnitLayer());
                 VillageData.Instance.TotalPopulation++;

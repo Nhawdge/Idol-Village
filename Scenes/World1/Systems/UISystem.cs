@@ -84,7 +84,7 @@ namespace VillageIdle.Scenes.World1.Systems
                 UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, position, true);
 
                 // Resources
-                var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value > 0);
+                var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value >= 0);
                 if (resourcesWithValues.Count() > 0)
                 {
                     text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value}"));
@@ -104,7 +104,7 @@ namespace VillageIdle.Scenes.World1.Systems
                 {
                     var unitName = unit.ToString();
                     var isAvailable = UnitStore.Instance.IsUnitAvailable(unit);
-                    var costString = "Costs:\n" + string.Join("\n", UnitStore.Instance.UnitCosts[unit].Select(x => $"{x.Key}: {x.Value}")) ;
+                    var costString = "Costs:\n" + string.Join("\n", UnitStore.Instance.UnitCosts[unit].Select(x => $"{x.Key}: {x.Value}"));
                     if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, unitName, new Vector2(10, yStart + yIndex * yIncrement), costString, !isAvailable))
                     {
                         UnitStore.CreateUnit(world, unit);
@@ -139,7 +139,7 @@ namespace VillageIdle.Scenes.World1.Systems
                             }
                         }
                     }
-                    var costString = "Costs:\n" + string.Join(", ", research.Costs.Select(x => $"{x.Key}: {x.Value}"));
+                    var costString = "Costs:\n" + string.Join("\n", research.Costs.Select(x => $"{x.Key}: {x.Value}"));
                     if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, $"{research.Name}", new Vector2(10, yStart + yIndex * yIncrement), costString, !canAfford))
                     {
                         if (!canAfford)
@@ -202,12 +202,12 @@ namespace VillageIdle.Scenes.World1.Systems
                         {
                             var producer = world.Create(ProducerStore.Producer);
                             producer.Set(new StructureLayer());
+                            producer.Set(new Interactable());
                             producer.Set(new ProductionUnit { Producer = production.Key });
                             var render = new Render(TextureKey.MedievalSpriteSheet);
-                            render.SetSource(SpriteSheetStore.Instance.GetDecorSheetSource(SpriteKey.Bushes));
-
+                            render.SetSource(production.SpriteRect);
                             var worldCenter = new Vector2(50 * 128, 50 * 128);
-                            var spread = 50 * totalUnits;
+                            var spread = 100 * totalUnits + 5;
                             render.Position = worldCenter + new Vector2(Random.Shared.Next(-spread, spread), Random.Shared.Next(-spread, spread));
                             producer.Set(render);
 

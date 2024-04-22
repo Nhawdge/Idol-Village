@@ -1,5 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Utils;
+using System.Numerics;
 using VillageIdle.Scenes.Components;
 using VillageIdle.Utilities;
 
@@ -17,7 +18,7 @@ namespace VillageIdle.Scenes.World1.Data
 
         private UnitStore()
         {
-            UnitCosts.Add(UnitRoles.Villager, new Dictionary<Resource, int> { { Resource.Food, 10 } });
+            UnitCosts.Add(UnitRoles.Villager, new Dictionary<Resource, int> { { Resource.Veggies, 10 } });
         }
 
         internal static void CreateUnit(World world, UnitRoles unitRole)
@@ -48,9 +49,10 @@ namespace VillageIdle.Scenes.World1.Data
             var render = new Render(TextureKey.MedievalSpriteSheet);
             render.SetSource(SpriteSheetStore.Instance.GetUnitSheetSource(SpriteKey.Woman));
             render.OriginPos = Render.OriginAlignment.LeftTop;
+            render.Position = new Vector2(50 * 128, 50 * 128);
             var unit = new Unit
             {
-                MovementGoal = new System.Numerics.Vector2(50 * 128, 50 * 128)
+                MovementGoal = new Vector2(50 * 128, 50 * 128)
             };
             world.Create(render, unit, new Interactable(), new UnitLayer());
         }
