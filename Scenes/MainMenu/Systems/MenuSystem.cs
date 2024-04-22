@@ -1,12 +1,12 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using IdolVillage.Extensions;
+using IdolVillage.Scenes.MainMenu.Components;
+using IdolVillage.Utilities;
 using Raylib_cs;
 using System.Numerics;
-using VillageIdle.Extensions;
-using VillageIdle.Scenes.MainMenu.Components;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.MainMenu.Systems
+namespace IdolVillage.Scenes.MainMenu.Systems
 {
     internal class MenuSystem : GameSystem
     {
@@ -26,7 +26,7 @@ namespace VillageIdle.Scenes.MainMenu.Systems
 
             var backgroundTexture = TextureManager.Instance.GetTexture(TextureKey.BrownBox);
 
-            patch.Source = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);  
+            patch.Source = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
             Raylib.DrawTextureNPatch(backgroundTexture, patch, new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
 
             var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton, UiSlider>();
@@ -80,12 +80,12 @@ namespace VillageIdle.Scenes.MainMenu.Systems
                     var background = TextureManager.Instance.GetTexture(button.Background);
                     patch.Source = new Rectangle(0, 0, background.Width, background.Height);
                     Raylib.DrawTextureNPatch(background, patch, rect, Vector2.Zero, 0f, boxColor);
-                    var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, button.Text, 20, 0);
-                    var position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)rect.Y + rect.Height / 2 - (size.Y / 2));
-                    Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, button.Text, position, 20, 0, Color.Black);
+                    var size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, button.Text, 20, 0);
+                    var position = new Vector2((int)(rect.X + rect.Width / 2 - size.X / 2), (int)rect.Y + rect.Height / 2 - size.Y / 2);
+                    Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, button.Text, position, 20, 0, Color.Black);
 
                 }
-              
+
             });
         }
     }

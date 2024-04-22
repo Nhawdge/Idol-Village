@@ -1,6 +1,6 @@
 ﻿using Arch.Core;
 
-namespace VillageIdle.Extensions
+namespace IdolVillage.Extensions
 {
     internal static class ArchExtensions
     {

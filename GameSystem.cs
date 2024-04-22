@@ -1,4 +1,4 @@
-﻿namespace VillageIdle
+﻿namespace IdolVillage
 {
     internal abstract class GameSystem
     {

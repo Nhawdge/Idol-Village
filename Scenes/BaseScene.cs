@@ -1,8 +1,8 @@
 ﻿using Arch.Core;
+using IdolVillage.Scenes.Systems;
 using System.Numerics;
-using VillageIdle.Scenes.Systems;
 
-namespace VillageIdle.Scenes
+namespace IdolVillage.Scenes
 {
     internal abstract class BaseScene
     {

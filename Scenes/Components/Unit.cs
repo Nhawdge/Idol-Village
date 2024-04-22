@@ -1,7 +1,7 @@
 ﻿using Arch.Core;
 using System.Numerics;
 
-namespace VillageIdle.Scenes.Components
+namespace IdolVillage.Scenes.Components
 {
     internal class Unit
     {

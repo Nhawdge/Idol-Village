@@ -1,9 +1,10 @@
-﻿using Raylib_cs;
+﻿using IdolVillage;
+using IdolVillage.Utilities;
+using Raylib_cs;
 using System.Numerics;
 using System.Reflection.PortableExecutable;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.World1.Helpers
+namespace IdolVillage.Scenes.World1.Helpers
 {
     internal class UiHelpers
     {
@@ -19,16 +20,16 @@ namespace VillageIdle.Scenes.World1.Helpers
 
             patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
 
-            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+            var size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
             var rect = new Rectangle((int)position.X, (int)position.Y, SideBarInnerWidth, size.Y);
 
-            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
+            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
             if (centered)
-                position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
+                position = new Vector2((int)(rect.X + rect.Width / 2 - size.X / 2), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
 
             rect.Height *= 1.35f;
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, Color.White);
-            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+            Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
         }
 
         internal static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position, string toolTip, bool isDisabled = false, bool centered = false)
@@ -44,12 +45,12 @@ namespace VillageIdle.Scenes.World1.Helpers
 
             patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
 
-            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+            var size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
             var rect = new Rectangle((int)position.X, (int)position.Y, SideBarInnerWidth, size.Y);
 
-            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
+            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
             if (centered)
-                position = new Vector2((int)(rect.X + (rect.Width / 2) - (size.X / 2)), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
+                position = new Vector2((int)(rect.X + rect.Width / 2 - size.X / 2), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
 
             rect.Height *= 1.35f;
 
@@ -73,7 +74,7 @@ namespace VillageIdle.Scenes.World1.Helpers
             }
 
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, color);
-            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+            Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
             return isClicked;
         }
@@ -121,17 +122,17 @@ namespace VillageIdle.Scenes.World1.Helpers
 
             patch.Source = new Rectangle(0, 0, texture.Width, texture.Height);
 
-            var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, textSize, 0);
+            var size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, textSize, 0);
             var rect = new Rectangle((int)position.X, (int)position.Y, SideBarInnerWidth, size.Y);
 
-            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + (rect.Height / 2) - (size.Y / 2)));
+            position = new Vector2((int)(rect.X + 10), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
 
             //rect.Height *= 1.3f;
             rect.Height += size.Y / 24 * 8;
             toolTipText = string.Empty;
 
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, Color.White);
-            Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, textSize, 0f, Color.Black);
+            Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, textSize, 0f, Color.Black);
         }
     }
 }

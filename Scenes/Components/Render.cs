@@ -1,8 +1,8 @@
-﻿using Raylib_cs;
+﻿using IdolVillage.Utilities;
+using Raylib_cs;
 using System.Numerics;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.Components
+namespace IdolVillage.Scenes.Components
 {
     internal class Render
     {
@@ -64,10 +64,10 @@ namespace VillageIdle.Scenes.Components
 
         public void SetSource(Rectangle rect)
         {
-            this.SourceX = (int)rect.X;
-            this.SourceY = (int)rect.Y;
-            this.SpriteWidth = (int)rect.Width;
-            this.SpriteHeight = (int)rect.Height;
+            SourceX = (int)rect.X;
+            SourceY = (int)rect.Y;
+            SpriteWidth = (int)rect.Width;
+            SpriteHeight = (int)rect.Height;
         }
 
         public virtual Rectangle Source

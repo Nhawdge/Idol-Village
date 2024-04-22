@@ -1,10 +1,10 @@
-﻿using QuickType.Aseprite;
+﻿using IdolVillage.Utilities;
+using QuickType.Aseprite;
 using Raylib_cs;
 using System.Numerics;
 using System.Text.Json;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.Components
+namespace IdolVillage.Scenes.Components
 {
     internal class Sprite : Render
     {

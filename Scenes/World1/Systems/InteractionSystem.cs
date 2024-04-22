@@ -1,18 +1,19 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using IdolVillage;
+using IdolVillage.Scenes.Components;
+using IdolVillage.Scenes.World1.Data;
+using IdolVillage.Utilities;
 using Raylib_cs;
-using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Data;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.World1.Systems
+namespace IdolVillage.Scenes.World1.Systems
 {
     internal class InteractionSystem : GameSystem
     {
         internal override void Update(World world)
         {
             var query = new QueryDescription().WithAll<Interactable, Render>();
-            var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), VillageIdleEngine.Instance.Camera);
+            var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), IdolVillageEngine.Instance.Camera);
             world.Query(in query, (entity) =>
             {
                 var interactable = entity.Get<Interactable>();

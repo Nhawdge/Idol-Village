@@ -1,6 +1,6 @@
-﻿using VillageIdle.Scenes.World1.Data;
+﻿using IdolVillage.Scenes.World1.Data;
 
-namespace VillageIdle.Scenes.Components
+namespace IdolVillage.Scenes.Components
 {
     internal class ProductionUnit
     {

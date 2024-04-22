@@ -1,8 +1,8 @@
-﻿using Raylib_cs;
+﻿using IdolVillage.Scenes.Components;
+using Raylib_cs;
 using System.Numerics;
-using VillageIdle.Scenes.Components;
 
-namespace VillageIdle.Extensions
+namespace IdolVillage.Extensions
 {
     internal static class MiscExtensions
     {
@@ -21,7 +21,7 @@ namespace VillageIdle.Extensions
         internal static Vector2 ToPixels(this Vector2 coords)
             => new Vector2(coords.X * 64, coords.Y * 64);
 
-        internal static T GetRandom<T>(this IList<T> list) 
+        internal static T GetRandom<T>(this IList<T> list)
         {
             return list[Random.Shared.Next(0, list.Count)];
         }

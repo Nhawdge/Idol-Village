@@ -1,4 +1,4 @@
-﻿namespace VillageIdle.Scenes.MainMenu.Components
+﻿namespace IdolVillage.Scenes.MainMenu.Components
 {
     internal class UiSlider : UiTitle
     {

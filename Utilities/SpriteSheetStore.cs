@@ -1,7 +1,7 @@
 ﻿using Raylib_cs;
 using System.Xml.Linq;
 
-namespace VillageIdle.Utilities
+namespace IdolVillage.Utilities
 {
     internal class SpriteSheetStore
     {

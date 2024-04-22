@@ -1,10 +1,10 @@
 ﻿using Arch.Core;
+using IdolVillage.Scenes.Components;
+using IdolVillage.Scenes.World1.Data;
+using IdolVillage.Utilities;
 using System.Numerics;
-using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Data;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.World1.Systems
+namespace IdolVillage.Scenes.World1.Systems
 {
     internal class RecruitmentSystem : GameSystem
     {

@@ -2,7 +2,7 @@
 using Arch.Core.Extensions;
 using Raylib_cs;
 
-namespace VillageIdle.Scenes.MainMenu.Systems
+namespace IdolVillage.Scenes.MainMenu.Systems
 {
     internal class MenuMusicSystem : GameSystem
     {

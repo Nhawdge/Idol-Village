@@ -1,9 +1,9 @@
 ﻿using Arch.Core.Utils;
+using IdolVillage.Scenes.Components;
+using IdolVillage.Utilities;
 using Raylib_cs;
-using VillageIdle.Scenes.Components;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.World1.Data
+namespace IdolVillage.Scenes.World1.Data
 {
     internal class ProducerStore
     {

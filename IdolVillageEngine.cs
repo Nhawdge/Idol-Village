@@ -1,12 +1,12 @@
-﻿using Raylib_cs;
-using VillageIdle.Scenes;
-using VillageIdle.Scenes.MainMenu;
+﻿using IdolVillage.Scenes;
+using IdolVillage.Scenes.MainMenu;
+using Raylib_cs;
 
-namespace VillageIdle
+namespace IdolVillage
 {
-    internal class VillageIdleEngine
+    internal class IdolVillageEngine
     {
-        public static VillageIdleEngine Instance = new VillageIdleEngine();
+        public static IdolVillageEngine Instance = new IdolVillageEngine();
 
         public Camera2D Camera;
         internal BaseScene ActiveScene;
@@ -18,7 +18,7 @@ namespace VillageIdle
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_UNDECORATED);
 
-            Raylib.InitWindow(1280, 768, "Village Idle");
+            Raylib.InitWindow(1280, 768, "Idol Village");
 
             var monitor = Raylib.GetCurrentMonitor();
             var width = Raylib.GetMonitorWidth(monitor);

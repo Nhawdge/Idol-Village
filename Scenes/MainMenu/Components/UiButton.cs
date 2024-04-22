@@ -1,6 +1,6 @@
-﻿using VillageIdle.Utilities;
+﻿using IdolVillage.Utilities;
 
-namespace VillageIdle.Scenes.MainMenu.Components
+namespace IdolVillage.Scenes.MainMenu.Components
 {
     internal class UiButton : UiTitle
     {

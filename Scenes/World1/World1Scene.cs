@@ -1,18 +1,18 @@
-﻿using Raylib_cs;
+﻿using IdolVillage.Extensions;
+using IdolVillage.Scenes.Components;
+using IdolVillage.Scenes.World1.Systems;
+using IdolVillage.Utilities;
+using Raylib_cs;
 using System.Numerics;
-using VillageIdle.Extensions;
-using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Systems;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.World1
+namespace IdolVillage.Scenes.World1
 {
     internal class World1Scene : BaseScene
     {
         public World1Scene()
         {
             var options = new List<SpriteKey> { SpriteKey.Grass1, SpriteKey.Grass2 };
-            base.LoadingTasks.Add("Build Map", () =>
+            LoadingTasks.Add("Build Map", () =>
             {
                 //Raylib.SetRandomSeed((uint)DateTime.Now.Ticks);
                 var noiseMap = Raylib.GenImagePerlinNoise(1000, 1000, Random.Shared.Next(), Random.Shared.Next(), Random.Shared.NextSingle());
@@ -70,7 +70,7 @@ namespace VillageIdle.Scenes.World1
 
 
 
-            base.LoadingTasks.Add("Loading", () =>
+            LoadingTasks.Add("Loading", () =>
             {
                 Systems.Add(new RenderSystem());
                 Systems.Add(new CameraSystem());
@@ -82,10 +82,10 @@ namespace VillageIdle.Scenes.World1
                 Systems.Add(new ToolTipSystem()); // Always last plz
             });
 
-            base.LoadingTasks.Add("Ready", () =>
+            LoadingTasks.Add("Ready", () =>
             {
-                VillageIdleEngine.Instance.Camera.Target.X = 50 * 128;
-                VillageIdleEngine.Instance.Camera.Target.Y = 50 * 128;
+                IdolVillageEngine.Instance.Camera.Target.X = 50 * 128;
+                IdolVillageEngine.Instance.Camera.Target.Y = 50 * 128;
             });
         }
     }

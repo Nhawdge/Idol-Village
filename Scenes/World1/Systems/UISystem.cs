@@ -1,20 +1,21 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using IdolVillage;
+using IdolVillage.Scenes.Components;
+using IdolVillage.Scenes.World1.Data;
+using IdolVillage.Scenes.World1.Helpers;
+using IdolVillage.Utilities;
 using Raylib_cs;
 using System.Net;
 using System.Numerics;
-using VillageIdle.Scenes.Components;
-using VillageIdle.Scenes.World1.Data;
-using VillageIdle.Scenes.World1.Helpers;
-using VillageIdle.Utilities;
 
-namespace VillageIdle.Scenes.World1.Systems
+namespace IdolVillage.Scenes.World1.Systems
 {
     internal class UISystem : GameSystem
     {
         private static readonly int SideBarWidth = 350;
         private static readonly int SideBarPadding = 10;
-        private static readonly int SideBarInnerWidth = SideBarWidth - (SideBarPadding * 2);
+        private static readonly int SideBarInnerWidth = SideBarWidth - SideBarPadding * 2;
         internal override void Update(World world) { }
         internal override void UpdateNoCamera(World world)
         {
@@ -79,7 +80,7 @@ namespace VillageIdle.Scenes.World1.Systems
                 // Title
                 var text = "Pavekstan";
                 var rect = new Rectangle(10, 10, SideBarInnerWidth, 40);
-                var size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+                var size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
                 var position = new Vector2(10, yStart + yIndex++ * yIncrement);
                 UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, position, true);
 
@@ -90,15 +91,15 @@ namespace VillageIdle.Scenes.World1.Systems
                     text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value}"));
 
                     UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, 60));
-                    size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
+                    size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
                     yStart += (int)size.Y + 30;
                 }
 
                 // Units
                 text = "Units";
-                size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
-                Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+                size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
+                position = new Vector2(10 + SideBarInnerWidth / 2 - size.X / 2, yStart + yIndex++ * yIncrement);
+                Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
                 foreach (var unit in UnitStore.AvailableUnits())
                 {
@@ -121,9 +122,9 @@ namespace VillageIdle.Scenes.World1.Systems
 
                 // Research
                 text = "Research";
-                size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
-                Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+                size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
+                position = new Vector2(10 + SideBarInnerWidth / 2 - size.X / 2, yStart + yIndex++ * yIncrement);
+                Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
                 foreach (var research in TechTree.Instance.GetAvailableTechnologies())
                 {
@@ -162,9 +163,9 @@ namespace VillageIdle.Scenes.World1.Systems
                 }
 
                 text = $"Jobs - Idle: {availableUnits.Count},  Total: {totalUnits}";
-                size = Raylib.MeasureTextEx(VillageIdleEngine.Instance.Font, text, 24, 0);
-                position = new Vector2(10 + (SideBarInnerWidth / 2) - (size.X / 2), yStart + yIndex++ * yIncrement);
-                Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+                size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
+                position = new Vector2(10 + SideBarInnerWidth / 2 - size.X / 2, yStart + yIndex++ * yIncrement);
+                Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
 
                 foreach (var production in ProducerStore.Instance.GetAvailableProducers())
                 {
@@ -193,7 +194,7 @@ namespace VillageIdle.Scenes.World1.Systems
                         });
                     }
 
-                    Raylib.DrawTextEx(VillageIdleEngine.Instance.Font, unitsInRole, new Vector2(260, yStart + yIndex * yIncrement), 24, 0f, Color.Black);
+                    Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, unitsInRole, new Vector2(260, yStart + yIndex * yIncrement), 24, 0f, Color.Black);
 
                     if (UiHelpers.DrawImageAsButton(TextureKey.ArrowSilverUp, new Vector2(300, yStart + yIndex * yIncrement + 5), availableUnits.Count <= 0))
                     {

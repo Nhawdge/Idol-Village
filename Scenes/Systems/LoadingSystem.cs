@@ -1,9 +1,10 @@
 ﻿using Arch.Core;
+using IdolVillage;
 using Raylib_cs;
 using System.Diagnostics;
 using System.Numerics;
 
-namespace VillageIdle.Scenes.Systems
+namespace IdolVillage.Scenes.Systems
 {
     internal class LoadingSystem : GameSystem
     {

@@ -1,6 +1,6 @@
 ﻿using Raylib_cs;
 
-namespace VillageIdle.Scenes.MainMenu.Components
+namespace IdolVillage.Scenes.MainMenu.Components
 {
     internal class UiTitle
     {

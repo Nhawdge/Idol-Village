@@ -1,8 +1,9 @@
 ﻿using Arch.Core;
-using VillageIdle.Scenes.World1.Helpers;
-using VillageIdle.Utilities;
+using IdolVillage;
+using IdolVillage.Scenes.World1.Helpers;
+using IdolVillage.Utilities;
 
-namespace VillageIdle.Scenes.World1.Systems
+namespace IdolVillage.Scenes.World1.Systems
 {
     internal class ToolTipSystem : GameSystem
     {

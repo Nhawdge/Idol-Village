@@ -1,4 +1,4 @@
-﻿namespace VillageIdle.Scenes.World1.Data
+﻿namespace IdolVillage.Scenes.World1.Data
 {
     internal class Singleton
     {

@@ -1,3 +1,3 @@
-﻿using VillageIdle;
+﻿using IdolVillage;
 
-VillageIdleEngine.Instance.StartGame();
+IdolVillageEngine.Instance.StartGame();

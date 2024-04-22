@@ -1,9 +1,9 @@
-﻿using VillageIdle.Scenes.MainMenu.Components;
-using VillageIdle.Scenes.MainMenu.Systems;
-using VillageIdle.Scenes.World1;
-using VillageIdle.Utilities;
+﻿using IdolVillage.Scenes.MainMenu.Components;
+using IdolVillage.Scenes.MainMenu.Systems;
+using IdolVillage.Scenes.World1;
+using IdolVillage.Utilities;
 
-namespace VillageIdle.Scenes.MainMenu
+namespace IdolVillage.Scenes.MainMenu
 {
     internal class MainMenuScene : BaseScene
     {
@@ -16,7 +16,7 @@ namespace VillageIdle.Scenes.MainMenu
                 Action = () =>
                 {
                     Console.WriteLine("Start Game");
-                    VillageIdleEngine.Instance.ActiveScene = new World1Scene();
+                    IdolVillageEngine.Instance.ActiveScene = new World1Scene();
                 },
                 Text = "Start Game",
                 Background = TextureKey.BlueBox,

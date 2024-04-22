@@ -1,6 +1,6 @@
 ﻿using Raylib_cs;
 
-namespace VillageIdle.Utilities
+namespace IdolVillage.Utilities
 {
     internal class TextureManager
     {

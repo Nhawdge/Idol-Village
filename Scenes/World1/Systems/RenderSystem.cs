@@ -1,9 +1,10 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
-using VillageIdle.Extensions;
-using VillageIdle.Scenes.Components;
+using IdolVillage;
+using IdolVillage.Extensions;
+using IdolVillage.Scenes.Components;
 
-namespace VillageIdle.Scenes.World1.Systems
+namespace IdolVillage.Scenes.World1.Systems
 {
     internal class RenderSystem : GameSystem
     {
