@@ -8,13 +8,27 @@
             {
                 Resources.Add(resource, -1);
             }
+            Resources[Resource.Veggies] = 10;
         }
 
+        internal void ApplyCosts(Dictionary<Resource, double> costs)
+        {
+            if (costs == null) return;
+            foreach (var cost in costs)
+            {
+                Resources[cost.Key] -= cost.Value;
+            }
+        }
         internal void AddResource(Resource resource, double amount)
         {
             if (Resources.ContainsKey(resource))
             {
+                if (Resources[resource] == -1)
+                {
+                    Resources[resource] += 1;
+                }
                 Resources[resource] += amount;
+
             }
             else
             {
@@ -34,7 +48,7 @@
     {
         None,
         Veggies,
-        Protien,
+        Protein,
         Pelt,
         Leather,
         Grain,

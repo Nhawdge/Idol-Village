@@ -20,7 +20,7 @@ namespace IdolVillage.Scenes.World1.Systems
                 {
                     MovementGoal = new Vector2(50 * 128, 50 * 128)
                 };
-                world.Create(render, unit, new Interactable(), new UnitLayer());
+                world.Create(render, unit, new Interactable() {  Name = "Villager" }, new UnitLayer());
                 VillageData.Instance.TotalPopulation++;
                 Console.WriteLine("Unit Spawned");
             }

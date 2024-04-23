@@ -33,24 +33,15 @@ namespace IdolVillage.Scenes.World1.Systems
                 {
                     canProduce = true;
                 }
-                else if (producer.Cost?.Count > 0)
+                else if (producer.ProductionCost?.Count > 0)
                 {
-                    var costs = producer.Cost;
-
-                    var canAfford = true;
-                    foreach (var cost in costs)
-                    {
-                        if (VillageData.Instance.Resources[cost.Key] < cost.Value)
-                        {
-                            canAfford = false;
-                            break;
-                        }
-                    }
+                    var canAfford = ProducerStore.Instance.CanProducerProduce(producer.Key);
+                    
                     canProduce = canAfford;
 
                     if (canAfford)
                     {
-                        foreach (var cost in costs)
+                        foreach (var cost in producer.ProductionCost)
                         {
                             VillageData.Instance.Resources[cost.Key] -= cost.Value;
                         }

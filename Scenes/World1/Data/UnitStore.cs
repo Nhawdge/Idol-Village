@@ -2,6 +2,7 @@
 using Arch.Core.Utils;
 using IdolVillage.Scenes.Components;
 using IdolVillage.Utilities;
+using Raylib_cs;
 using System.Numerics;
 
 namespace IdolVillage.Scenes.World1.Data
@@ -14,11 +15,14 @@ namespace IdolVillage.Scenes.World1.Data
         internal static readonly ComponentType[] Producer = [typeof(Sprite), typeof(Unit), typeof(Interactable), typeof(UnitLayer)];
 
         internal static List<UnitRoles> AvailableUnits() => new List<UnitRoles> { UnitRoles.Villager };
-        internal Dictionary<UnitRoles, Dictionary<Resource, int>> UnitCosts = new();
+        internal Dictionary<UnitRoles, Dictionary<Resource, double>> UnitCosts = new();
 
         private UnitStore()
         {
-            UnitCosts.Add(UnitRoles.Villager, new Dictionary<Resource, int> { { Resource.Veggies, 10 } });
+            UnitCosts.Add(UnitRoles.Villager, new Dictionary<Resource, double> {
+                { Resource.Veggies, 2 },
+                { Resource.Protein, 2 },
+            });
         }
 
         internal static void CreateUnit(World world, UnitRoles unitRole)
@@ -47,14 +51,14 @@ namespace IdolVillage.Scenes.World1.Data
         private static void CreateVillager(World world)
         {
             var render = new Render(TextureKey.MedievalSpriteSheet);
-            render.SetSource(SpriteSheetStore.Instance.GetUnitSheetSource(SpriteKey.Woman));
+            render.SetSource(SpriteSheetStore.Instance.GetUnitSheetSource(Random.Shared.Next(0, 1) == 0 ? SpriteKey.Woman : SpriteKey.Man));
             render.OriginPos = Render.OriginAlignment.LeftTop;
             render.Position = new Vector2(50 * 128, 50 * 128);
             var unit = new Unit
             {
                 MovementGoal = new Vector2(50 * 128, 50 * 128)
             };
-            world.Create(render, unit, new Interactable(), new UnitLayer());
+            world.Create(render, unit, new Interactable() { Name = "Villager" }, new UnitLayer());
         }
 
         internal bool IsUnitAvailable(UnitRoles unit)

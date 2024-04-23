@@ -16,5 +16,6 @@ namespace IdolVillage.Utilities
 
             return false;
         }
+
     }
 }

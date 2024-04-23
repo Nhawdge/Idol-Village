@@ -1,8 +1,6 @@
-﻿using IdolVillage;
-using IdolVillage.Utilities;
+﻿using IdolVillage.Utilities;
 using Raylib_cs;
 using System.Numerics;
-using System.Reflection.PortableExecutable;
 
 namespace IdolVillage.Scenes.World1.Helpers
 {
@@ -27,7 +25,7 @@ namespace IdolVillage.Scenes.World1.Helpers
             if (centered)
                 position = new Vector2((int)(rect.X + rect.Width / 2 - size.X / 2), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
 
-            rect.Height *= 1.35f;
+            rect.Height += size.Y / 24 * 8;
             Raylib.DrawTextureNPatch(texture, patch, rect, Vector2.Zero, 0f, Color.White);
             Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
         }
@@ -35,7 +33,6 @@ namespace IdolVillage.Scenes.World1.Helpers
         internal static bool DrawButtonWithBackground(TextureKey textureKey, string text, Vector2 position, string toolTip, bool isDisabled = false, bool centered = false)
         {
             var mousePos = Raylib.GetMousePosition();
-
 
             var color = Color.White;
             var isClicked = false;
@@ -52,7 +49,9 @@ namespace IdolVillage.Scenes.World1.Helpers
             if (centered)
                 position = new Vector2((int)(rect.X + rect.Width / 2 - size.X / 2), (int)(rect.Y + rect.Height / 2 - size.Y / 2));
 
-            rect.Height *= 1.35f;
+            //rect.Height *= 1.35f;
+            rect.Height += size.Y / 24 * 8;
+
 
             if (Raylib.CheckCollisionPointRec(mousePos, rect))
             {

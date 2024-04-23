@@ -31,7 +31,7 @@ namespace IdolVillage.Scenes.World1
                         var blue = Raylib.GetImageColor(noiseMap, x * 10, y * 10).B;
 
                         //Console.WriteLine($"Red Value: {red} at {x},{y}");
-                        if (red > 120)
+                        if (red > 1200) //intentionally broken
                         {
                             var treeVersion = red switch
                             {
@@ -59,7 +59,15 @@ namespace IdolVillage.Scenes.World1
                 center.Color = Color.White;
                 center.Position.X = 50 * 128;
                 center.Position.Y = 50 * 128;
-                World.Create(center, new StructureLayer(), new Interactable());
+                World.Create(center, new StructureLayer(), new Interactable()
+                {
+                    Name = "Pavekstan Village",
+                    ShowResearch = true,
+                    ShowUnits = true,
+                    ShowProducers = true,
+                    ShowResources = true,
+                    ShowAssignments = false,
+                });
 
                 //var treeRender = new Render(TextureKey.MedievalSpriteSheet);
                 //treeRender.Position = new Vector2(100, 100);

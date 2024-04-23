@@ -1,5 +1,4 @@
 ﻿using Arch.Core;
-using IdolVillage;
 using Raylib_cs;
 
 namespace IdolVillage.Scenes.World1.Systems
