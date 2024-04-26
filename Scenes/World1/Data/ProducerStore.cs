@@ -69,8 +69,6 @@ namespace IdolVillage.Scenes.World1.Data
 
             var worldCenter = new Vector2(50, 50);
 
-
-
             var gridCoords = worldCenter + GridUtilities.GetNextPosition(totalStructures);
             render.Position = gridCoords * gridSize;
             producer.Set(render);
@@ -384,22 +382,22 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.None, new Producer
-            {
-                Key = ProducerTypes.None,
-                Name = "Test - None",
-                SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
-                ProductionRequired = 10f,
-                ProducedPerSecond = 1,
-                ResourceAmountProduced = 1f,
-                Resource = Resource.None,
-                IsAvailable = true,
-                ChanceToSucceed = 1f,
-                BuildCost = new Dictionary<Resource, double> { },
-                ProductionCost = new Dictionary<Resource, double> {
-                },
-                FailureAction = () => { }
-            });
+            //Producers.Add(ProducerTypes.None, new Producer
+            //{
+            //    Key = ProducerTypes.None,
+            //    Name = "Test - None",
+            //    SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
+            //    ProductionRequired = 10f,
+            //    ProducedPerSecond = 1,
+            //    ResourceAmountProduced = 1f,
+            //    Resource = Resource.None,
+            //    IsAvailable = true,
+            //    ChanceToSucceed = 1f,
+            //    BuildCost = new Dictionary<Resource, double> { },
+            //    ProductionCost = new Dictionary<Resource, double> {
+            //    },
+            //    FailureAction = () => { }
+            //});
         }
     }
 
