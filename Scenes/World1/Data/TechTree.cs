@@ -1,4 +1,7 @@
-﻿namespace IdolVillage.Scenes.World1.Data
+﻿
+using IdolVillage.Scenes.World1.Systems;
+
+namespace IdolVillage.Scenes.World1.Data
 {
     internal class TechTree
     {
@@ -72,7 +75,7 @@
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.HuntingPelts },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Leather },
+                ProductionToAdd = new() { ProducerTypes.Leather, ProducerTypes.WorshipRug },
                 Costs = new() { 
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -362,7 +365,6 @@
                     { Resource.Stone, 20 },
                 }
             });
-
         }
     }
 
@@ -378,6 +380,15 @@
         internal List<ProducerTypes> ProductionToAdd = new();
         internal Dictionary<Resource, double> Costs = new();
         internal TechnologyKeys Key;
+
+        internal void CompleteResearch()
+        {
+            Researched = true; 
+            foreach (var producerKey in ProductionToAdd)
+            {
+                ProducerStore.Instance.Producers[producerKey].IsAvailable = true;
+            }
+        }
     }
 
     internal enum TechnologyKeys

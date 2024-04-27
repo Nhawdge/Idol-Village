@@ -382,6 +382,24 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
+            Producers.Add(ProducerTypes.WorshipRug, new Producer
+            {
+                Key = ProducerTypes.WorshipRug,
+                Name = "Worship Rug",
+                SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
+                ProductionRequired = 5f,
+                ProducedPerSecond = 1,
+                ResourceAmountProduced = 5f,
+                Resource = Resource.Belief,
+                IsAvailable = false,
+                ChanceToSucceed = 1f,
+                BuildCost = new Dictionary<Resource, double> { },
+                ProductionCost = new Dictionary<Resource, double>
+                {
+                },
+                FailureAction = () => { }
+            });
+
             //Producers.Add(ProducerTypes.None, new Producer
             //{
             //    Key = ProducerTypes.None,
@@ -440,5 +458,6 @@ namespace IdolVillage.Scenes.World1.Data
         StoneBuildingMaterials,
         Metal,
         Coins,
+        WorshipRug,
     }
 }

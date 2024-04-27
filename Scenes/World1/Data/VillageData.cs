@@ -66,5 +66,6 @@
         Meals,
         Wool,
         Cloth,
+        Belief,
     }
 }

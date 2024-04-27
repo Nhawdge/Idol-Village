@@ -12,12 +12,18 @@ namespace IdolVillage.Scenes.MainMenu
     {
         internal Render Logo;
 
+        internal Sprite RaylibLogo;
+
+        internal float LoadingTime = 0;
         public MainMenuScene()
-        { 
+        {
             Systems.Add(new MenuSystem());
 
             Logo = new Render(TextureKey.MainLogo);
             Logo.Position = new Vector2(Raylib.GetScreenWidth() / 2, 100);
+
+            RaylibLogo = new Sprite(TextureKey.RaylibLogo, "Assets/raylib_logo_animation");
+            RaylibLogo.Position = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
 
             World.Create(new UiButton
             {
@@ -35,6 +41,7 @@ namespace IdolVillage.Scenes.MainMenu
             logoRender.OriginPos = Render.OriginAlignment.Center;
             logoRender.Position = new Vector2(10, 30);
             World.Create(logoRender, new SkyLayer());
+
         }
     }
 }

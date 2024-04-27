@@ -56,7 +56,7 @@ namespace IdolVillage
             Raylib.BeginDrawing();
             Raylib.BeginMode2D(Camera);
 
-            Raylib.ClearBackground(Color.Black);
+            Raylib.ClearBackground(Color.RayWhite);
             for (int i = 0; i < ActiveScene.Systems.Count; i++)
             {
                 ActiveScene.Systems[i].Update(ActiveScene.World);

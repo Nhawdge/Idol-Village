@@ -31,6 +31,8 @@ namespace IdolVillage.Utilities
             TextureStore.Add(TextureKey.MedievalSpriteSheet, Raylib.LoadTexture("Assets/Kenney/RTS-Medieval/Spritesheet/medievalRTS_spritesheet@2.png"));
             TextureStore.Add(TextureKey.MainLogo, Raylib.LoadTexture("Assets/Logo.png"));
 
+            TextureStore.Add(TextureKey.RaylibLogo, Raylib.LoadTexture("Assets/raylib_logo_animation.png"));
+
             var mostPatchInfos = new NPatchInfo
             {
                 Left = 10,
@@ -75,5 +77,6 @@ namespace IdolVillage.Utilities
         ArrowSilverLeft,
         ArrowSilverDown,
         MainLogo,
+        RaylibLogo,
     }
 }

@@ -93,7 +93,7 @@ namespace IdolVillage.Scenes.World1.Systems
                     var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value >= 0);
                     if (resourcesWithValues.Any())
                     {
-                        text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value}"));
+                        text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value.ToString("0")}"));
 
                         UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, yStart + yIndex++ * yIncrement));
                         size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 30, 0);
@@ -149,17 +149,8 @@ namespace IdolVillage.Scenes.World1.Systems
                         var costString = $"Costs:\n{string.Join("\n", research.Costs.Select(x => $"{x.Key}: {x.Value}"))}\n{research.Description}";
                         if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, $"{research.Name}", new Vector2(10, yStart + yIndex * yIncrement), costString, !canAfford))
                         {
-                            if (!canAfford)
-                                continue;
-
                             VillageData.Instance.ApplyCosts(research.Costs);
-
-                            //pass
-                            research.Researched = true;
-                            foreach (var producerKey in research.ProductionToAdd)
-                            {
-                                ProducerStore.Instance.Producers[producerKey].IsAvailable = true;
-                            }
+                            research.CompleteResearch();
                         }
                         yIndex++;
                     }
