@@ -10,5 +10,6 @@
         internal bool ShowProducers;
         internal bool ShowAssignments = true;
         internal bool ShowStats;
+        internal bool ShowCosts = true;
     }
 }

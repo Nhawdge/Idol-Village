@@ -8,6 +8,7 @@
             {
                 Resources.Add(resource, -1);
             }
+            Resources[Resource.Belief] = 0;
             Resources[Resource.Veggies] = 10;
         }
 
@@ -47,6 +48,7 @@
     public enum Resource
     {
         None,
+        Belief,
         Veggies,
         Protein,
         Pelt,
@@ -66,6 +68,5 @@
         Meals,
         Wool,
         Cloth,
-        Belief,
     }
 }

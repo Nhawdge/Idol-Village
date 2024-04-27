@@ -83,6 +83,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Key = ProducerTypes.Gathering,
                 Name = "Bushes",
+                Description = "Plant some veggies to grow Veggies, but mostly collecting mushrooms",
                 ToolTipDescription = "Plant some veggies to grow Veggies, but mostly collecting mushrooms",
                 SpriteRect = SpriteSheetStore.Instance.GetDecorSheetSource(SpriteKey.Bushes),
                 ProductionRequired = 10f,
@@ -145,7 +146,7 @@ namespace IdolVillage.Scenes.World1.Data
             Producers.Add(ProducerTypes.Wood, new Producer
             {
                 Key = ProducerTypes.Wood,
-                Name = "Forestry",
+                Name = "Lumberjack hut",
                 ToolTipDescription = "Chop down trees for wood, probably",
                 SpriteRect = SpriteSheetStore.Instance.GetDecorSheetSource(SpriteKey.Tree),
                 ProductionRequired = 30f,
@@ -161,7 +162,7 @@ namespace IdolVillage.Scenes.World1.Data
             Producers.Add(ProducerTypes.Lumber, new Producer
             {
                 Key = ProducerTypes.Lumber,
-                Name = "Lumber",
+                Name = "Sawmill",
                 ToolTipDescription = "You would make wood into lumber",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
                 ProductionRequired = 10f,
@@ -546,7 +547,14 @@ namespace IdolVillage.Scenes.World1.Data
     public class Producer
     {
         public string Name = "None";
-        public string Description = "None";
+        private string _Description;
+
+        public string Description
+        {
+            get => _Description ?? ToolTipDescription;
+            set => _Description = StringUtilities.GetDescriptionForTooltip(value);
+        }
+
         private string _ToolTipDescription;
         internal string ToolTipDescription
         {

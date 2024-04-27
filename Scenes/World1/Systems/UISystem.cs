@@ -14,7 +14,7 @@ namespace IdolVillage.Scenes.World1.Systems
         private static readonly int SideBarWidth = 350;
         private static readonly int SideBarPadding = 10;
         private static readonly int SideBarInnerWidth = SideBarWidth - SideBarPadding * 2;
-        private int yStartBase = 10;
+        public int yStartBase = 10;
 
         internal override void Update(World world) { }
 
@@ -28,13 +28,18 @@ namespace IdolVillage.Scenes.World1.Systems
             var totalUnits = 0;
             var allUnits = new List<EntityReference>();
 
-            if (Raylib.IsKeyDown(KeyboardKey.PageDown))
+            var mousePos = Raylib.GetMousePosition();
+            if (mousePos.X < SideBarWidth)
             {
-                yStartBase = Math.Min(yStartBase - 10, 1000);
-            }
-            if (Raylib.IsKeyDown(KeyboardKey.PageUp))
-            {
-                yStartBase = Math.Min(yStartBase + 10, 10);
+                var scroll = InteractionHelper.GetMouseScroll();
+                if (scroll < 0)
+                {
+                    yStartBase = Math.Min(yStartBase - 10, 1000);
+                }
+                if (scroll > 0)
+                {
+                    yStartBase = Math.Min(yStartBase + 10, 10);
+                }
             }
 
             world.Query(in unitQuery, (entity) =>
@@ -49,7 +54,7 @@ namespace IdolVillage.Scenes.World1.Systems
             });
 
             var query = new QueryDescription().WithAll<Interactable>();
-            var mousePos = Raylib.GetMousePosition();
+
             world.Query(in query, (entity) =>
             {
                 if (entity.Id != Singleton.Instance.SelectedUnit)
@@ -221,6 +226,25 @@ namespace IdolVillage.Scenes.World1.Systems
                     }
                     yIndex++;
                 }
+
+                if (interactable.ShowCosts && entity.Has<ProductionUnit>())
+                {
+                    text = $"Cost per run";
+                    size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 24, 0);
+                    position = new Vector2(10 + SideBarInnerWidth / 2 - size.X / 2, yStart + yIndex++ * yIncrement);
+                    Raylib.DrawTextEx(IdolVillageEngine.Instance.Font, text, position, 24, 0f, Color.Black);
+
+                    var producerUnit = entity.Get<ProductionUnit>();
+                    var producerData = ProducerStore.Instance.Producers[producerUnit.Producer];
+
+                    var description = $"Cost:\n{string.Join("\n", producerData.ProductionCost?.Select(x => $"{x.Key}: {x.Value}"))}\n---\n{producerData.Description}";
+
+
+                    UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, description, new Vector2(10, yStart + yIndex * yIncrement));
+
+                    yIndex++;
+                }
+
             });
         }
     }

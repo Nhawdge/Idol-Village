@@ -67,6 +67,7 @@ namespace IdolVillage.Scenes.World1
                     ShowProducers = true,
                     ShowResources = true,
                     ShowAssignments = false,
+                    ShowCosts = false,
                 });
 
                 //var treeRender = new Render(TextureKey.MedievalSpriteSheet);
@@ -81,13 +82,13 @@ namespace IdolVillage.Scenes.World1
             LoadingTasks.Add("Loading", () =>
             {
                 Systems.Add(new RenderSystem());
-                Systems.Add(new CameraSystem());
                 Systems.Add(new InteractionSystem());
                 Systems.Add(new UISystem());
                 Systems.Add(new RecruitmentSystem());
                 Systems.Add(new UnitMovementSystem());
                 Systems.Add(new ProductionSystem());
                 Systems.Add(new BeliefSystem());
+                Systems.Add(new CameraSystem());
                 Systems.Add(new ToolTipSystem()); // Always last plz
             });
 

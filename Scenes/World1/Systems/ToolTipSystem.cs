@@ -13,6 +13,7 @@ namespace IdolVillage.Scenes.World1.Systems
         {
             UiHelpers.DrawToolTipOnMouse();
             InteractionHelper.ClickProcessed = false;
+            InteractionHelper.ScrollProcessed = false;
         }
     }
 }

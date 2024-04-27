@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using IdolVillage.Utilities;
 using Raylib_cs;
 
 namespace IdolVillage.Scenes.World1.Systems
@@ -30,14 +31,13 @@ namespace IdolVillage.Scenes.World1.Systems
                 IdolVillageEngine.Instance.Camera.Target.X += 5 * zoomSpeed;
             }
 
-            var scroll = Raylib.GetMouseWheelMove();
-            if (scroll < 0)
+            if (Raylib.IsKeyPressed(KeyboardKey.PageDown))
             {
                 IdolVillageEngine.Instance.Camera.Zoom = Math.Max(IdolVillageEngine.Instance.Camera.Zoom - 0.2f, 0.2f);
             }
-            else if (scroll > 0)
+            else if (Raylib.IsKeyPressed(KeyboardKey.PageUp))
             {
-                IdolVillageEngine.Instance.Camera.Zoom += 0.2f;
+                IdolVillageEngine.Instance.Camera.Zoom = Math.Min(IdolVillageEngine.Instance.Camera.Zoom + 0.2f, 2f);
             }
         }
     }

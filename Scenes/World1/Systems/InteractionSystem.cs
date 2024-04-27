@@ -27,6 +27,10 @@ namespace IdolVillage.Scenes.World1.Systems
                             Singleton.Instance.SelectedUnit = -1;
                         else
                             Singleton.Instance.SelectedUnit = entity.Id;
+                        if (IdolVillageEngine.Instance.ActiveScene.Systems.FirstOrDefault(x => x is UISystem) is UISystem uiSystem)
+                        {
+                            uiSystem.yStartBase = 0;
+                        }
                     }
                 }
                 else
