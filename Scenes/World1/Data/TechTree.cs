@@ -1,5 +1,4 @@
-﻿
-using IdolVillage.Scenes.World1.Systems;
+﻿using IdolVillage.Utilities;
 
 namespace IdolVillage.Scenes.World1.Data
 {
@@ -12,7 +11,7 @@ namespace IdolVillage.Scenes.World1.Data
         internal List<Technology> GetAvailableTechnologies()
         {
             return Technologies.Where(x => x.Researched == false
-                && x.Prerequisites.All(y => Technologies.First( z=> z.Key == y).Researched)).ToList();
+                && x.Prerequisites.All(y => Technologies.First(z => z.Key == y).Researched)).ToList();
         }
 
         private TechTree()
@@ -26,7 +25,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Foraging",
                 Key = TechnologyKeys.Foraging,
-                Description = "Unlocks the ability to search for mushrooms.",
+                ToolTipDescription = "Unlocks the ability to search for mushrooms",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new() { },
@@ -39,7 +38,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Hunting (protein)",
                 Key = TechnologyKeys.HuntingFood,
-                Description = "Unlocks the ability to hunt for food.",
+                ToolTipDescription = "Unlocks hunting for food",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Foraging },
@@ -54,7 +53,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Hunting (Pelts)",
                 Key = TechnologyKeys.HuntingPelts,
-                Description = "Unlocks the ability to hunt for Pelts.",
+                ToolTipDescription = "Unlocks hunting for pelts",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.HuntingFood },
@@ -70,13 +69,13 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Tanning",
                 Key = TechnologyKeys.Tanning,
-                Description = "Tannery",
+                ToolTipDescription = "Unlocks the ability to tan pelts into leather.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.HuntingPelts },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Leather, ProducerTypes.WorshipRug },
-                Costs = new() { 
+                Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
                     { Resource.Pelt, 10 },
@@ -87,7 +86,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Farming",
                 Key = TechnologyKeys.Farming,
-                Description = "Unlocks the ability to farm crops.",
+                ToolTipDescription = "Unlocks the ability to farm grains",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Foraging, TechnologyKeys.HuntingFood },
@@ -103,7 +102,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Milling",
                 Key = TechnologyKeys.Windmill,
-                Description = "Unlocks the ability to farm crops.",
+                ToolTipDescription = "Unlocks the ability to mill grains into flour",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Farming },
@@ -120,7 +119,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Forestry",
                 Key = TechnologyKeys.Forestry,
-                Description = "Unlocks the ability to gain wood.",
+                ToolTipDescription = "Unlocks the ability to harvest wood",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.HuntingFood },
@@ -136,7 +135,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Lumbermill",
                 Key = TechnologyKeys.Lumbermill,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to mill wood into lumber",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Forestry },
@@ -153,12 +152,12 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Carpenter",
                 Key = TechnologyKeys.Carpenter,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a carpenter's workshop to produce Building Materials.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Lumbermill },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.BuildingMaterials },
+                ProductionToAdd = new() { ProducerTypes.BuildingMaterials, ProducerTypes.Altar },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -171,7 +170,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Kitchen",
                 Key = TechnologyKeys.Kitchen,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a kitchen for making Meals.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter },
@@ -189,7 +188,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Ranch",
                 Key = TechnologyKeys.Ranch,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a ranch for producing Wool.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter },
@@ -208,7 +207,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Weaver",
                 Key = TechnologyKeys.Weaver,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a weaver's workshop for producing Cloth.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter, TechnologyKeys.Ranch },
@@ -227,7 +226,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Workshop",
                 Key = TechnologyKeys.Workshop,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a workshop for producing Tools.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter },
@@ -246,7 +245,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Mines (Gold)",
                 Key = TechnologyKeys.MineGold,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a mine for mining Gold Ore.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Workshop },
@@ -267,7 +266,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Mint",
                 Key = TechnologyKeys.Mint,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a mint for producing Coins.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.MineGold },
@@ -288,7 +287,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Mines (Metal)",
                 Key = TechnologyKeys.MineMetal,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a mine for mining Metal Ore.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Workshop },
@@ -308,10 +307,10 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Smithy",
                 Key = TechnologyKeys.Smithy,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a smithy for producing Metal bars",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
-                Prerequisites = new List<TechnologyKeys> { TechnologyKeys.MineMetal},
+                Prerequisites = new List<TechnologyKeys> { TechnologyKeys.MineMetal },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Metal },
                 Costs = new() {
@@ -329,7 +328,7 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Quarry",
                 Key = TechnologyKeys.Quarry,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a quarry for mining Stone.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Workshop },
@@ -349,12 +348,12 @@ namespace IdolVillage.Scenes.World1.Data
             {
                 Name = "Mason",
                 Key = TechnologyKeys.Mason,
-                Description = "Unlocks the Lumber mill.",
+                ToolTipDescription = "Unlocks the ability to build a mason's workshop for producing Stone Building Materials.",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Quarry },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.StoneBuildingMaterials },
+                ProductionToAdd = new() { ProducerTypes.StoneBuildingMaterials, ProducerTypes.Temple },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -370,8 +369,15 @@ namespace IdolVillage.Scenes.World1.Data
 
     internal class Technology
     {
-        internal string Name = "";
-        internal string Description = "";
+        internal string Name = string.Empty;
+        internal string Description = string.Empty;
+        private string _ToolTipDescription;
+        internal string ToolTipDescription
+        {
+            get => _ToolTipDescription;
+            set => _ToolTipDescription = StringUtilities.GetDescriptionForTooltip(value);
+        }
+
         internal List<TechnologyKeys> Prerequisites = new();
         internal bool Researched = false;
         internal float ResearchCost = 0f;
@@ -381,9 +387,16 @@ namespace IdolVillage.Scenes.World1.Data
         internal Dictionary<Resource, double> Costs = new();
         internal TechnologyKeys Key;
 
+        //public Technology()
+        //{
+        //Description = description;
+        //ToolTipDescription = StringUtilities.GetDescriptionForTooltip(description);
+        //}
+
+
         internal void CompleteResearch()
         {
-            Researched = true; 
+            Researched = true;
             foreach (var producerKey in ProductionToAdd)
             {
                 ProducerStore.Instance.Producers[producerKey].IsAvailable = true;

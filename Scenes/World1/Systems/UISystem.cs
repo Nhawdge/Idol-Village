@@ -146,7 +146,7 @@ namespace IdolVillage.Scenes.World1.Systems
                             }
                         }
 
-                        var costString = $"Costs:\n{string.Join("\n", research.Costs.Select(x => $"{x.Key}: {x.Value}"))}\n{research.Description}";
+                        var costString = $"Costs:\n{string.Join("\n", research.Costs.Select(x => $"{x.Key}: {x.Value}"))}\n\n{research.ToolTipDescription}";
                         if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, $"{research.Name}", new Vector2(10, yStart + yIndex * yIncrement), costString, !canAfford))
                         {
                             VillageData.Instance.ApplyCosts(research.Costs);
@@ -167,7 +167,7 @@ namespace IdolVillage.Scenes.World1.Systems
                     {
                         var canBuild = ProducerStore.Instance.IsProducerBuildable(production.Key);
 
-                        var tooltip = "Costs:\n" + string.Join("\n", production?.BuildCost.Select(x => $"{x.Key}: {x.Value}"));
+                        var tooltip = $"Costs:\n{string.Join("\n", production?.BuildCost.Select(x => $"{x.Key}: {x.Value}"))}\n\n{production.ToolTipDescription}";
                         if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, production.Name, new Vector2(10, yStart + yIndex * yIncrement + 5), tooltip, !canBuild))
                         {
                             ProducerStore.CreateProducer(world, production);
