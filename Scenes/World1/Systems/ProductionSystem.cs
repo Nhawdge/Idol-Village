@@ -25,7 +25,7 @@ namespace IdolVillage.Scenes.World1.Systems
 
                 var productionUnit = entity.Get<ProductionUnit>();
                 var producer = ProducerStore.Instance.Producers[productionUnit.Producer];
-                var render = entity.Get<Render>();
+                var render = entity.Get<Sprite>();
 
                 var canProduce = false;
 

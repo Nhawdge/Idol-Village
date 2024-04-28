@@ -107,7 +107,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Farming },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Flour },
+                ProductionToAdd = new() { ProducerTypes.Windmill },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -140,7 +140,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Forestry },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Lumber },
+                ProductionToAdd = new() { ProducerTypes.Sawmill },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -157,7 +157,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Lumbermill },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.BuildingMaterials, ProducerTypes.Altar },
+                ProductionToAdd = new() { ProducerTypes.Carpenter, ProducerTypes.Altar },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -175,7 +175,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Meals },
+                ProductionToAdd = new() { ProducerTypes.Kitchen },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -193,7 +193,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Wool },
+                ProductionToAdd = new() { ProducerTypes.RanchWool },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -212,7 +212,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter, TechnologyKeys.Ranch },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Cloth },
+                ProductionToAdd = new() { ProducerTypes.Weaver },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -231,7 +231,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Carpenter },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Tools },
+                ProductionToAdd = new() { ProducerTypes.Workshop },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -250,7 +250,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Workshop },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Gold },
+                ProductionToAdd = new() { ProducerTypes.GoldMine },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -271,7 +271,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.MineGold },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Coins },
+                ProductionToAdd = new() { ProducerTypes.Mint },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -292,7 +292,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Workshop },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.MetalOre },
+                ProductionToAdd = new() { ProducerTypes.MetalMine },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -312,7 +312,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.MineMetal },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Metal },
+                ProductionToAdd = new() { ProducerTypes.Smithy },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -333,7 +333,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Workshop },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.Stone },
+                ProductionToAdd = new() { ProducerTypes.Quarry },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
@@ -353,7 +353,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ResearchTime = 10f,
                 Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Quarry },
                 Researched = false,
-                ProductionToAdd = new() { ProducerTypes.StoneBuildingMaterials, ProducerTypes.Temple },
+                ProductionToAdd = new() { ProducerTypes.StoneMason, ProducerTypes.Temple },
                 Costs = new() {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },

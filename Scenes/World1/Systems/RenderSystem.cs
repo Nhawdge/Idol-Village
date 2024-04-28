@@ -23,11 +23,19 @@ namespace IdolVillage.Scenes.World1.Systems
                 var render = entity.Get<Render>();
                 render.Draw();
             });
-            var query3 = new QueryDescription().WithAll<Render, StructureLayer>();
+            var query3 = new QueryDescription().WithAll<StructureLayer>();
             world.Query(in query3, (entity) =>
             {
-                var render = entity.Get<Render>();
-                render.Draw();
+                if (entity.Has<Render>())
+                {
+                    var render = entity.Get<Render>();
+                    render.Draw();
+                }
+                else if (entity.Has<Sprite>())
+                {
+                    var render = entity.Get<Sprite>();
+                    render.Draw();
+                }
             });
             var query4 = new QueryDescription().WithAll<Render, UnitLayer>();
             world.Query(in query4, (entity) =>

@@ -31,5 +31,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Art\" />
+  </ItemGroup>
+
 
 </Project>

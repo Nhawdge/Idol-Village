@@ -22,6 +22,18 @@ namespace IdolVillage.Scenes.World1.Systems
         {
             var producerQuery = new QueryDescription().WithAll<ProductionUnit>();
 
+            var producerCounts = new Dictionary<ProducerTypes, int>();
+
+            world.Query(in producerQuery, (entity) =>
+            {
+                var producerUnit = entity.Get<ProductionUnit>();
+                if (!producerCounts.ContainsKey(producerUnit.Producer))
+                {
+                    producerCounts[producerUnit.Producer] = 0;
+                }
+                producerCounts[producerUnit.Producer]++;
+            });
+
             var unitQuery = new QueryDescription().WithAll<Unit>();
 
             var availableUnits = new List<EntityReference>();
@@ -172,8 +184,11 @@ namespace IdolVillage.Scenes.World1.Systems
                     {
                         var canBuild = ProducerStore.Instance.IsProducerBuildable(production.Key);
 
+                        var count = producerCounts.TryGetValue(production.Key, out var value) ? value : 0;
+
+                        var name = $"{production.Name} ( {count} )";
                         var tooltip = $"Costs:\n{string.Join("\n", production?.BuildCost.Select(x => $"{x.Key}: {x.Value}"))}\n\n{production.ToolTipDescription}";
-                        if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, production.Name, new Vector2(10, yStart + yIndex * yIncrement + 5), tooltip, !canBuild))
+                        if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, name, new Vector2(10, yStart + yIndex * yIncrement + 5), tooltip, !canBuild))
                         {
                             ProducerStore.CreateProducer(world, production);
                         }
@@ -220,7 +235,7 @@ namespace IdolVillage.Scenes.World1.Systems
                             var nextUnitUnit = nextUnit.Entity.Get<Unit>();
 
                             nextUnitUnit.AssignedTo = entity.Reference();
-                            var render = entity.Get<Render>();
+                            var render = entity.Get<Sprite>();
                             nextUnitUnit.MovementGoal = render.Position;
                         }
                     }

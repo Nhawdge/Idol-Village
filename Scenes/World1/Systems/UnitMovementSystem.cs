@@ -25,7 +25,7 @@ namespace IdolVillage.Scenes.World1.Systems
                     if (distance > 5)
                     {
                         direction = Vector2.Normalize(direction);
-                        render.Position += direction * 15 * Raylib.GetFrameTime();
+                        render.Position += direction * 50 * Raylib.GetFrameTime();
                         unit.CurrentAction = Unit.UnitActions.Move;
                     }
                     else if (unit.AssignedTo != default)
@@ -45,11 +45,11 @@ namespace IdolVillage.Scenes.World1.Systems
                     }
                     else
                     {
-                        var assignedToRender = unit.AssignedTo.Entity.Get<Render>();
+                        var assignedToRender = unit.AssignedTo.Entity.Get<Sprite>();
 
                         if (unit.MovementGoal.DistanceTo(render.Position) < 5)
                         {
-                            var assignedToPosition = unit.AssignedTo.Entity.Get<Render>().Position;
+                            var assignedToPosition = unit.AssignedTo.Entity.Get<Sprite>().Position;
                             var randomDirection = new Vector2(Random.Shared.NextSingle() * 2 - 1, Random.Shared.NextSingle() * 2 - 1);
                             unit.MovementGoal = assignedToPosition + randomDirection * 25;
                         }

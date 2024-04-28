@@ -13,7 +13,7 @@ namespace IdolVillage.Scenes.World1.Data
         internal static ProducerStore Instance = new();
         internal Dictionary<ProducerTypes, Producer> Producers = new();
 
-        internal static readonly ComponentType[] Producer = [typeof(ProductionUnit), typeof(Render), typeof(StructureLayer), typeof(Interactable)];
+        internal static readonly ComponentType[] Producer = [typeof(ProductionUnit), typeof(Sprite), typeof(StructureLayer), typeof(Interactable)];
         internal List<Producer> GetAvailableProducers() => Producers.Values.Where(x => x.IsAvailable).ToList();
 
         private ProducerStore()
@@ -62,16 +62,21 @@ namespace IdolVillage.Scenes.World1.Data
             producer.Set(new StructureLayer());
             producer.Set(new Interactable() { Name = production.Name });
             producer.Set(new ProductionUnit { Producer = production.Key });
-            var render = new Render(TextureKey.MedievalSpriteSheet);
-            render.SetSource(production.SpriteRect);
+            var sprite = new Sprite(TextureKey.ProductionStructures, "Assets/Art/ProductionStructures");
+            sprite.SpriteWidth = 64;
+            sprite.SpriteHeight = 64;
+            var animationKey = $"{production.Key.ToString().ToLowerInvariant()}-idle";
+            sprite.Play(animationKey);
+            
+            Console.WriteLine(animationKey);
 
             var gridSize = 128;
 
             var worldCenter = new Vector2(50, 50);
 
             var gridCoords = worldCenter + GridUtilities.GetNextPosition(totalStructures);
-            render.Position = gridCoords * gridSize;
-            producer.Set(render);
+            sprite.Position = gridCoords * gridSize;
+            producer.Set(sprite);
 
             VillageData.Instance.ApplyCosts(production.BuildCost);
         }
@@ -159,9 +164,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Lumber, new Producer
+            Producers.Add(ProducerTypes.Sawmill, new Producer
             {
-                Key = ProducerTypes.Lumber,
+                Key = ProducerTypes.Sawmill,
                 Name = "Sawmill",
                 ToolTipDescription = "You would make wood into lumber",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -191,9 +196,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Flour, new Producer
+            Producers.Add(ProducerTypes.Windmill, new Producer
             {
-                Key = ProducerTypes.Flour,
+                Key = ProducerTypes.Windmill,
                 Name = "Windmill",
                 ToolTipDescription = "It really grinds my grain into flour",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -211,9 +216,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.BuildingMaterials, new Producer
+            Producers.Add(ProducerTypes.Carpenter, new Producer
             {
-                Key = ProducerTypes.BuildingMaterials,
+                Key = ProducerTypes.Carpenter,
                 Name = "Carpenter",
                 ToolTipDescription = "Builds Building Materials for building buildings",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -229,9 +234,9 @@ namespace IdolVillage.Scenes.World1.Data
                 ProductionCost = new Dictionary<Resource, double> { { Resource.Lumber, 10 } },
                 FailureAction = () => { }
             });
-            Producers.Add(ProducerTypes.Meals, new Producer
+            Producers.Add(ProducerTypes.Kitchen, new Producer
             {
-                Key = ProducerTypes.Meals,
+                Key = ProducerTypes.Kitchen,
                 Name = "Kitchen",
                 ToolTipDescription = "Let's cook",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -253,9 +258,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Wool, new Producer
+            Producers.Add(ProducerTypes.RanchWool, new Producer
             {
-                Key = ProducerTypes.Wool,
+                Key = ProducerTypes.RanchWool,
                 Name = "Ranch (Sheep)",
                 ToolTipDescription = "Sure, shear shiny sheep for wool",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -275,9 +280,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Cloth, new Producer
+            Producers.Add(ProducerTypes.Weaver, new Producer
             {
-                Key = ProducerTypes.Cloth,
+                Key = ProducerTypes.Weaver,
                 Name = "Weaver",
                 ToolTipDescription = "Weave through wool of life into cloth",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -297,9 +302,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Tools, new Producer
+            Producers.Add(ProducerTypes.Workshop, new Producer
             {
-                Key = ProducerTypes.Tools,
+                Key = ProducerTypes.Workshop,
                 Name = "Workshop",
                 ToolTipDescription = "Make tools for stuff",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -319,9 +324,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Gold, new Producer
+            Producers.Add(ProducerTypes.GoldMine, new Producer
             {
-                Key = ProducerTypes.Gold,
+                Key = ProducerTypes.GoldMine,
                 Name = "Gold Mine",
                 ToolTipDescription = "Mine for gold, but not for the gold diggers",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -341,9 +346,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Coins, new Producer
+            Producers.Add(ProducerTypes.Mint, new Producer
             {
-                Key = ProducerTypes.Coins,
+                Key = ProducerTypes.Mint,
                 Name = "Mint",
                 ToolTipDescription = "Mint coins for the \"economy\"",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -363,9 +368,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.MetalOre, new Producer
+            Producers.Add(ProducerTypes.MetalMine, new Producer
             {
-                Key = ProducerTypes.MetalOre,
+                Key = ProducerTypes.MetalMine,
                 Name = "Metal Mine",
                 ToolTipDescription = "Why do we say Rock On when it's metal?",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -386,9 +391,9 @@ namespace IdolVillage.Scenes.World1.Data
             });
 
 
-            Producers.Add(ProducerTypes.Metal, new Producer
+            Producers.Add(ProducerTypes.Smithy, new Producer
             {
-                Key = ProducerTypes.Metal,
+                Key = ProducerTypes.Smithy,
                 Name = "Smithy",
                 ToolTipDescription = "Smith metal into stuff",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -408,9 +413,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.Stone, new Producer
+            Producers.Add(ProducerTypes.Quarry, new Producer
             {
-                Key = ProducerTypes.Stone,
+                Key = ProducerTypes.Quarry,
                 Name = "Quarry",
                 ToolTipDescription = "You're at the wrong place, white castle is down the block",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -430,9 +435,9 @@ namespace IdolVillage.Scenes.World1.Data
                 FailureAction = () => { }
             });
 
-            Producers.Add(ProducerTypes.StoneBuildingMaterials, new Producer
+            Producers.Add(ProducerTypes.StoneMason, new Producer
             {
-                Key = ProducerTypes.StoneBuildingMaterials,
+                Key = ProducerTypes.StoneMason,
                 Name = "Mason",
                 ToolTipDescription = "These are so boring to write",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
@@ -582,21 +587,21 @@ namespace IdolVillage.Scenes.World1.Data
         HuntingFood,
         Farm,
         Wood,
-        Lumber,
+        Sawmill,
         HuntingPelts,
         Leather,
-        Flour,
-        BuildingMaterials,
-        Meals,
-        Wool,
-        Cloth,
-        Tools,
-        Gold,
-        MetalOre,
-        Stone,
-        StoneBuildingMaterials,
-        Metal,
-        Coins,
+        Windmill,
+        Carpenter,
+        Kitchen,
+        RanchWool,
+        Weaver,
+        Workshop,
+        GoldMine,
+        MetalMine,
+        Quarry,
+        StoneMason,
+        Smithy,
+        Mint,
         WorshipRug,
         Altar,
         Temple,
