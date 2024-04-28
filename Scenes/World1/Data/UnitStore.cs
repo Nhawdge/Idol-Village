@@ -50,8 +50,11 @@ namespace IdolVillage.Scenes.World1.Data
 
         private static void CreateVillager(World world)
         {
-            var render = new Render(TextureKey.MedievalSpriteSheet);
-            render.SetSource(SpriteSheetStore.Instance.GetUnitSheetSource(Random.Shared.Next(0, 1) == 0 ? SpriteKey.Woman : SpriteKey.Man));
+            var render = new Sprite(TextureKey.Units,"Assets/Art/Units");
+            render.Play("villager2-idle");
+            render.SpriteWidth = 64;
+            render.SpriteHeight = 64;
+
             render.OriginPos = Render.OriginAlignment.LeftTop;
             render.Position = new Vector2(50 * 128, 50 * 128);
             var unit = new Unit

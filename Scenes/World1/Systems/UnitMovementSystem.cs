@@ -12,10 +12,10 @@ namespace IdolVillage.Scenes.World1.Systems
     {
         internal override void Update(World world)
         {
-            var query = new QueryDescription().WithAll<Render, Unit>();
+            var query = new QueryDescription().WithAll<Sprite, Unit>();
             world.Query(in query, (entity) =>
             {
-                var render = entity.Get<Render>();
+                var render = entity.Get<Sprite>();
                 var unit = entity.Get<Unit>();
 
                 if (unit.CurrentAction == Unit.UnitActions.Move)
@@ -60,20 +60,19 @@ namespace IdolVillage.Scenes.World1.Systems
 
                             direction = Vector2.Normalize(direction);
                             render.Position += direction * 10 * Raylib.GetFrameTime();
-
                         }
                     }
                 }
                 else if (unit.CurrentAction == Unit.UnitActions.Idle)
                 {
-                    if (unit.AssignedTo != EntityReference.Null)
+                    if (unit.AssignedTo == default || unit.AssignedTo == EntityReference.Null)
                     {
-                        unit.CurrentAction = Unit.UnitActions.Move;
+                        var randomDirection = new Vector2(Random.Shared.NextSingle() * 2 - 1, Random.Shared.NextSingle() * 2 - 1);
+                        unit.MovementGoal = new Vector2(128 * 50) + randomDirection * 125;
                     }
                     else
                     {
-                        var randomDirection = new Vector2(Random.Shared.Next(-1, 1), Random.Shared.Next(-1, 1));
-                        unit.MovementGoal = render.Position + randomDirection * 15;
+                        unit.CurrentAction = Unit.UnitActions.Move;
                     }
                 }
             });

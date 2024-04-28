@@ -12,7 +12,7 @@ namespace IdolVillage.Scenes.World1.Systems
         internal override void Update(World world)
         {
             var query = new QueryDescription().WithAll<ProductionUnit>();
-            var unitQuery = new QueryDescription().WithAll<Render, Unit>();
+            var unitQuery = new QueryDescription().WithAll<Sprite, Unit>();
 
             world.Query(in query, (entity) =>
             {

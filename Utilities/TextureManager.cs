@@ -30,6 +30,8 @@ namespace IdolVillage.Utilities
 
             TextureStore.Add(TextureKey.MedievalSpriteSheet, Raylib.LoadTexture("Assets/Kenney/RTS-Medieval/Spritesheet/medievalRTS_spritesheet@2.png"));
             TextureStore.Add(TextureKey.ProductionStructures, Raylib.LoadTexture("Assets/Art/ProductionStructures.png"));
+            TextureStore.Add(TextureKey.MapTiles, Raylib.LoadTexture("Assets/Art/Tiles.png"));
+            TextureStore.Add(TextureKey.Units, Raylib.LoadTexture("Assets/Art/Units.png"));
 
             TextureStore.Add(TextureKey.MainLogo, Raylib.LoadTexture("Assets/Logo.png"));
             TextureStore.Add(TextureKey.RaylibLogo, Raylib.LoadTexture("Assets/raylib_logo_animation.png"));
@@ -80,5 +82,7 @@ namespace IdolVillage.Utilities
         MainLogo,
         RaylibLogo,
         ProductionStructures,
+        MapTiles,
+        Units,
     }
 }

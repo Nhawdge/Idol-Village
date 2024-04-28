@@ -11,17 +11,33 @@ namespace IdolVillage.Scenes.World1.Systems
         internal int index = 1;
         internal override void Update(World world)
         {
-            var query1 = new QueryDescription().WithAll<Render, UnderLayer>();
+            var query1 = new QueryDescription().WithAll<UnderLayer>();
             world.Query(in query1, (entity) =>
             {
-                var render = entity.Get<Render>();
-                render.Draw();
+                if (entity.Has<Render>())
+                {
+                    var render = entity.Get<Render>();
+                    render.Draw();
+                }
+                else if (entity.Has<Sprite>())
+                {
+                    var render = entity.Get<Sprite>();
+                    render.Draw();
+                }
             });
-            var query2 = new QueryDescription().WithAll<Render, GroundLayer>();
+            var query2 = new QueryDescription().WithAll<GroundLayer>();
             world.Query(in query2, (entity) =>
             {
-                var render = entity.Get<Render>();
-                render.Draw();
+                if (entity.Has<Render>())
+                {
+                    var render = entity.Get<Render>();
+                    render.Draw();
+                }
+                else if (entity.Has<Sprite>())
+                {
+                    var render = entity.Get<Sprite>();
+                    render.Draw();
+                }
             });
             var query3 = new QueryDescription().WithAll<StructureLayer>();
             world.Query(in query3, (entity) =>
@@ -37,17 +53,33 @@ namespace IdolVillage.Scenes.World1.Systems
                     render.Draw();
                 }
             });
-            var query4 = new QueryDescription().WithAll<Render, UnitLayer>();
+            var query4 = new QueryDescription().WithAll<UnitLayer>();
             world.Query(in query4, (entity) =>
             {
-                var render = entity.Get<Render>();
-                render.Draw();
+                if (entity.Has<Render>())
+                {
+                    var render = entity.Get<Render>();
+                    render.Draw();
+                }
+                else if (entity.Has<Sprite>())
+                {
+                    var render = entity.Get<Sprite>();
+                    render.Draw();
+                }
             });
-            var query5 = new QueryDescription().WithAll<Render, SkyLayer>();
+            var query5 = new QueryDescription().WithAll<SkyLayer>();
             world.Query(in query5, (entity) =>
             {
-                var render = entity.Get<Render>();
-                render.Draw();
+                if (entity.Has<Render>())
+                {
+                    var render = entity.Get<Render>();
+                    render.Draw();
+                }
+                else if (entity.Has<Sprite>())
+                {
+                    var render = entity.Get<Sprite>();
+                    render.Draw();
+                }
             });
         }
     }

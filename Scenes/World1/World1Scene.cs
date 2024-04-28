@@ -20,8 +20,10 @@ namespace IdolVillage.Scenes.World1
                 {
                     for (int y = 0; y < 100; y++)
                     {
-                        var tile = new Render(TextureKey.MedievalSpriteSheet);
-                        tile.SetSource(SpriteSheetStore.Instance.GetTileSheetSource(options.GetRandom()));
+                        var tile = new Sprite(TextureKey.MapTiles, "Assets/Art/Tiles", 2);
+                        tile.SpriteWidth = 64;
+                        tile.SpriteHeight = 64;
+
                         tile.Color = Color.White;
                         tile.Position.X = x * 128;
                         tile.Position.Y = y * 128;
@@ -54,8 +56,10 @@ namespace IdolVillage.Scenes.World1
                     }
                 }
 
-                var center = new Render(TextureKey.MedievalSpriteSheet);
-                center.SetSource(SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.CityCenter));
+                var center = new Sprite(TextureKey.ProductionStructures, "Assets/Art/ProductionStructures",2);
+                center.Play("villagecenter-idle");
+                center.SpriteWidth = 64;
+                center.SpriteHeight = 64;
                 center.Color = Color.White;
                 center.Position.X = 50 * 128;
                 center.Position.Y = 50 * 128;
