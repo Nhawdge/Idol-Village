@@ -105,7 +105,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ToolTipDescription = "Unlocks the ability to mill grains into flour",
                 ResearchCost = 10f,
                 ResearchTime = 10f,
-                Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Farming },
+                Prerequisites = new List<TechnologyKeys> { TechnologyKeys.Farming, TechnologyKeys.Weaver },
                 Researched = false,
                 ProductionToAdd = new() { ProducerTypes.Windmill },
                 Costs = new() {

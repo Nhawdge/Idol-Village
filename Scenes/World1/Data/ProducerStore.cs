@@ -170,9 +170,9 @@ namespace IdolVillage.Scenes.World1.Data
                 Name = "Sawmill",
                 ToolTipDescription = "You would make wood into lumber",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
-                ProductionRequired = 10f,
+                ProductionRequired = 5f,
                 ProducedPerSecond = 1f,
-                ResourceAmountProduced = 1f,
+                ResourceAmountProduced = 2f,
                 Resource = Resource.Lumber,
                 ChanceToSucceed = 1f,
                 BuildCost = new Dictionary<Resource, double> { { Resource.Wood, 20 } },
@@ -243,7 +243,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ProductionRequired = 10f,
                 ProducedPerSecond = 10f,
                 ResourceAmountProduced = 1f,
-                Resource = Resource.BuildingMaterial,
+                Resource = Resource.Meals,
                 ChanceToSucceed = 1f,
                 BuildCost = new Dictionary<Resource, double> {
                     { Resource.Wood, 20 },
@@ -253,7 +253,7 @@ namespace IdolVillage.Scenes.World1.Data
                 ProductionCost = new Dictionary<Resource, double> {
                     { Resource.Veggies, 10 },
                     { Resource.Protein, 10 },
-                    { Resource.Grain, 10 },
+                    { Resource.Flour, 10 },
                 },
                 FailureAction = () => { }
             });
@@ -319,7 +319,7 @@ namespace IdolVillage.Scenes.World1.Data
                     { Resource.BuildingMaterial, 10 },
                 },
                 ProductionCost = new Dictionary<Resource, double> {
-                    { Resource.BuildingMaterial, 10 },
+                    { Resource.Wood, 10 },
                 },
                 FailureAction = () => { }
             });
@@ -330,9 +330,9 @@ namespace IdolVillage.Scenes.World1.Data
                 Name = "Gold Mine",
                 ToolTipDescription = "Mine for gold, but not for the gold diggers",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
-                ProductionRequired = 10f,
+                ProductionRequired = 120f,
                 ProducedPerSecond = 1,
-                ResourceAmountProduced = 1f,
+                ResourceAmountProduced = 25f,
                 Resource = Resource.GoldOre,
                 ChanceToSucceed = 1f,
                 BuildCost = new Dictionary<Resource, double> {
@@ -374,9 +374,9 @@ namespace IdolVillage.Scenes.World1.Data
                 Name = "Metal Mine",
                 ToolTipDescription = "Why do we say Rock On when it's metal?",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
-                ProductionRequired = 10f,
+                ProductionRequired = 120f,
                 ProducedPerSecond = 1,
-                ResourceAmountProduced = 1f,
+                ResourceAmountProduced = 25f,
                 Resource = Resource.MetalOre,
                 ChanceToSucceed = 1f,
                 BuildCost = new Dictionary<Resource, double> {
@@ -419,9 +419,9 @@ namespace IdolVillage.Scenes.World1.Data
                 Name = "Quarry",
                 ToolTipDescription = "You're at the wrong place, white castle is down the block",
                 SpriteRect = SpriteSheetStore.Instance.GetStructureSheetSource(SpriteKey.Tent),
-                ProductionRequired = 10f,
+                ProductionRequired = 120f,
                 ProducedPerSecond = 1,
-                ResourceAmountProduced = 1f,
+                ResourceAmountProduced = 50f,
                 Resource = Resource.Stone,
                 ChanceToSucceed = 1f,
                 BuildCost = new Dictionary<Resource, double> {

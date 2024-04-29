@@ -5,6 +5,7 @@ using IdolVillage.Scenes.World1.Data;
 using IdolVillage.Scenes.World1.Helpers;
 using IdolVillage.Utilities;
 using Raylib_cs;
+using System.Globalization;
 using System.Numerics;
 
 namespace IdolVillage.Scenes.World1.Systems
@@ -46,11 +47,11 @@ namespace IdolVillage.Scenes.World1.Systems
                 var scroll = InteractionHelper.GetMouseScroll();
                 if (scroll < 0)
                 {
-                    yStartBase = Math.Min(yStartBase - 10, 1000);
+                    yStartBase = Math.Min(yStartBase - 50, 1000);
                 }
                 if (scroll > 0)
                 {
-                    yStartBase = Math.Min(yStartBase + 10, 10);
+                    yStartBase = Math.Min(yStartBase + 50, 10);
                 }
             }
 
@@ -110,7 +111,7 @@ namespace IdolVillage.Scenes.World1.Systems
                     var resourcesWithValues = VillageData.Instance.Resources.Where(x => x.Value >= 0);
                     if (resourcesWithValues.Any())
                     {
-                        text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key}: {x.Value.ToString("0")}"));
+                        text = string.Join("\n", resourcesWithValues.Select(x => $"{x.Key.ToTitleCase()}: {x.Value.ToString("0")}"));
 
                         UiHelpers.DrawTextWithBackground(TextureKey.BlueBox, text, new Vector2(10, yStart + yIndex++ * yIncrement));
                         size = Raylib.MeasureTextEx(IdolVillageEngine.Instance.Font, text, 30, 0);
@@ -187,7 +188,8 @@ namespace IdolVillage.Scenes.World1.Systems
                         var count = producerCounts.TryGetValue(production.Key, out var value) ? value : 0;
 
                         var name = $"{production.Name} ( {count} )";
-                        var tooltip = $"Costs:\n{string.Join("\n", production?.BuildCost.Select(x => $"{x.Key}: {x.Value}"))}\n\n{production.ToolTipDescription}";
+                        var resourceName = production.Resource.ToTitleCase();
+                        var tooltip = $"Costs:\n{string.Join("\n", production?.BuildCost.Select(x => $"{x.Key}: {x.Value} ( {VillageData.Instance.Resources[x.Key]} ) "))}\n\nProduces: {resourceName}\n\n---\n{production.ToolTipDescription}";
                         if (UiHelpers.DrawButtonWithBackground(TextureKey.BlueBox, name, new Vector2(10, yStart + yIndex * yIncrement + 5), tooltip, !canBuild))
                         {
                             ProducerStore.CreateProducer(world, production);

@@ -30,7 +30,7 @@ namespace IdolVillage.Scenes.World1.Systems
 
                 if (Raylib.CheckCollisionPointRec(mousePos, render.CollisionDestination))
                 {
-                    Raylib.DrawRectangleLines((int)render.CollisionDestination.X, (int)render.CollisionDestination.Y, (int)render.CollisionDestination.Width, (int)render.CollisionDestination.Height, Color.Gold);
+                    //Raylib.DrawRectangleLines((int)render.CollisionDestination.X, (int)render.CollisionDestination.Y, (int)render.CollisionDestination.Width, (int)render.CollisionDestination.Height, Color.Gold);
                     render.Color = Color.Gray;
                     if (InteractionHelper.GetMouseClick(MouseButton.Left))
                     {

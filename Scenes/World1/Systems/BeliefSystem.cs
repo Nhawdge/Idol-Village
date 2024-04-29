@@ -15,7 +15,7 @@ namespace IdolVillage.Scenes.World1.Systems
             {
                 time -= 1;
                 var belief = VillageData.Instance.Resources[Resource.Belief];
-                var toRemove = EasingHelpers.easeInQuad(belief / 10);
+                var toRemove = EasingHelpers.easeInQuad(belief / 10000);
                 VillageData.Instance.Resources[Resource.Belief] = Math.Max(VillageData.Instance.Resources[Resource.Belief] - toRemove, 0);
             }
         }
