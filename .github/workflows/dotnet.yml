@@ -19,21 +19,39 @@ jobs:
       run: dotnet restore
     - name: Publish 
       run: dotnet publish --configuration Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true
+    - name: Publish Linux
+      run: dotnet publish --configuration Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true
+
     - name: Easy Zip Files 
       uses: vimtor/action-zip@v1
       with:
         files: bin/Release/net8.0/win-x64/publish/
         dest:  'Idol-Village-win-${{ github.ref_name }}.zip'
+    - name: Easy Zip Files linux
+      uses: vimtor/action-zip@v1
+      with:
+        files: bin/Release/net8.0/linux-x64/publish/
+        dest:  'Idol-Village-linux-${{ github.ref_name }}.zip'
     - name: GH Release
       uses: softprops/action-gh-release@v0.1.14
       with:
         files: 'Idol-Village-win-${{ github.ref_name }}*'
+    - name: GH Release
+      uses: softprops/action-gh-release@v0.1.14
+      with:
+        files: 'Idol-Village-linux-${{ github.ref_name }}*'
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: 'Idol-Village-win-${{ github.ref_name }}.zip'
         path: 'Idol-Village-win-${{ github.ref_name }}.zip'        
+        retention-days: 1
+    - name: Upload a Build Artifact linux
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'Idol-Village-linux-${{ github.ref_name }}.zip'
+        path: 'Idol-Village-linux-${{ github.ref_name }}.zip'        
         retention-days: 1
 
    
